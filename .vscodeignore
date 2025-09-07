@@ -1,0 +1,26 @@
+# Source files
+src/
+tsconfig.json
+*.ts
+
+# Development files
+.vscode/
+.claude/
+.husky/
+node_modules/
+bun.lock
+bunfig.toml
+biome.json
+.release-it.json
+
+# Documentation and config files not needed in extension
+CLAUDE.md
+README.md
+CHANGELOG.md
+.gitignore
+
+# Scripts
+scripts/
+
+# Build artifacts
+*.vsix
