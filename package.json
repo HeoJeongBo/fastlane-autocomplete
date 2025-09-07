@@ -47,6 +47,18 @@
         "scopeName": "source.fastfile",
         "path": "./syntaxes/fastfile.tmLanguage.json"
       }
+    ],
+    "commands": [
+      {
+        "command": "fastlane-autocomplete.initData",
+        "title": "Initialize Fastlane Data",
+        "category": "Fastlane Autocomplete"
+      },
+      {
+        "command": "fastlane-autocomplete.refreshData", 
+        "title": "Refresh Fastlane Data",
+        "category": "Fastlane Autocomplete"
+      }
     ]
   },
   "scripts": {
@@ -62,12 +74,13 @@
     "check": "biome check .",
     "check:fix": "biome check --write .",
     "release": "release-it",
-    "release:dry": "release-it --dry-run"
+    "release:dry": "release-it --dry-run",
+    "fastlane:init": "node ./scripts/init-fastlane-data.js"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.3",
     "@release-it/conventional-changelog": "10.0.1",
-    "@types/node": "16.x",
+    "@types/node": "24.3.1",
     "@types/vscode": "^1.74.0",
     "husky": "9.1.7",
     "release-it": "19.0.4",

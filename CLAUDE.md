@@ -24,15 +24,19 @@ fastlane-autocomplete/
 - `bun install`: 의존성 설치
 - `bun run compile`: TypeScript 컴파일
 - `bun run dev`: 파일 변경 감지하여 자동 컴파일
+- `bun run fastlane:init`: Fastlane 데이터 캐시 초기화
 - F5: VSCode에서 확장 디버깅 실행
 
 ## 기능
 1. **Syntax Highlighting**: Fastfile에 대한 색상 구문 강조
-2. **자동완성**: 
-   - iOS/Android fastlane 액션
-   - 플러그인 액션 (Pluginfile 기반)
-   - lane 키워드 (`lane`, `private_lane`, `desc`)
-3. **코드 스니펫**: 자주 사용되는 패턴에 대한 템플릿 제공
+2. **동적 자동완성**: 
+   - 실제 설치된 fastlane 액션 (플러그인 포함)
+   - 프로젝트의 실제 레인 (`fastlane lanes` 기반)
+   - 파라미터가 포함된 스니펫 (`fastlane action` 기반)
+3. **성능 최적화된 캐싱**: 
+   - 초기화 명령으로 데이터 사전 로드
+   - VSCode 명령어로 캐시 새로고침 지원
+4. **스마트 fallback**: CLI 실패 시 하드코딩된 액션으로 대체
 
 ## 지원하는 Fastlane 액션
 ### iOS
@@ -57,10 +61,22 @@ fastlane-autocomplete/
 - firebase_app_distribution
 - firebase_app_distribution_get_latest_release
 
-## 테스트 방법
+## 사용 방법
+### 첫 설치 후 설정
+1. 프로젝트에 fastlane과 Pluginfile이 설정되어 있는지 확인
+2. 다음 중 하나의 방법으로 데이터 초기화:
+   - 터미널: `bun run fastlane:init` (또는 `npm run fastlane:init`)
+   - VSCode 명령어: `Ctrl+Shift+P` → "Fastlane Autocomplete: Initialize Data"
+3. VSCode 재시작
+
+### 테스트 방법
 1. F5를 눌러 Extension Development Host 실행
 2. 새 Fastfile 생성 또는 기존 Fastfile 열기
 3. 자동완성 및 신택스 하이라이팅 확인
+
+### 데이터 갱신
+- 새 플러그인 설치 후: `Ctrl+Shift+P` → "Fastlane Autocomplete: Refresh Data"
+- 캐시는 24시간 후 자동으로 경고 표시
 
 ## 빌드 및 배포
 1. `vsce package` 명령으로 .vsix 파일 생성
