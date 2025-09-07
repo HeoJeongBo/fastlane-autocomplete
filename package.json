@@ -2,12 +2,13 @@
   "name": "fastlane-autocomplete",
   "displayName": "Fastlane Autocomplete",
   "description": "Fastfile 작성을 위한 자동완성 및 신택스 하이라이팅 확장",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "heojeongbo",
   "repository": {
     "type": "git",
     "url": "https://github.com/heojeongbo/fastlane-autocomplete.git"
   },
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.74.0"
   },
