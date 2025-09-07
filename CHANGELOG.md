@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [0.1.3](https://github.com/heojeongbo/fastlane-autocomplete/compare/v0.1.1...v0.1.3) (2025-09-07)
+
+
+### Bug Fixes
+
+* biome setting ([ac98cc9](https://github.com/heojeongbo/fastlane-autocomplete/commit/ac98cc9531d1714e9c5091cef56eca1f142395db))
+
+
+### Features
+
+* add git & vscode extension public ([49362c1](https://github.com/heojeongbo/fastlane-autocomplete/commit/49362c113f9c29d8695c2d663e214ff958c1feac))
+* add license ([553d5b9](https://github.com/heojeongbo/fastlane-autocomplete/commit/553d5b9bfcde0467dd5af839e8695df60da76b8e))
+* add logo ([4fe3bab](https://github.com/heojeongbo/fastlane-autocomplete/commit/4fe3bab013e4b5768ec43757d988e3bcecbcb7ad))
+* add release-it script ([76d0167](https://github.com/heojeongbo/fastlane-autocomplete/commit/76d0167a450fd25028bcad777f96dab8b869614f))
+* modify logic static to dynamic ([db716aa](https://github.com/heojeongbo/fastlane-autocomplete/commit/db716aa93b591e91ebacd3e0c5be77611b98b99f))
+
 ## 0.1.1 (2025-09-07)
 
 
