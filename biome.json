@@ -5,7 +5,9 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noExplicitAny": "off"
+        "noExplicitAny": "off",
+        "noTemplateCurlyInString": "off",
+        "noControlCharactersInRegex": "off"
       },
       "style": {
         "useConst": "error",

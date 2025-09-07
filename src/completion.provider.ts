@@ -1,9 +1,13 @@
-import * as fs from "fs";
-import * as path from "path";
+import { exec } from "node:child_process";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { promisify } from "node:util";
 import * as vscode from "vscode";
-import { exec } from "child_process";
-import { promisify } from "util";
-import { FastlaneDataManager, CachedActionInfo, CachedLaneInfo } from "./fastlane-data-manager";
+import {
+	type CachedActionInfo,
+	type CachedLaneInfo,
+	FastlaneDataManager,
+} from "./fastlane-data-manager";
 
 const execAsync = promisify(exec);
 
@@ -57,33 +61,35 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 
 		// Try to load from cache first
 		const cachedData = this.dataManager.getCachedData();
-		
+
 		if (cachedData) {
-			console.log('Loading fastlane data from cache');
-			
+			console.log("Loading fastlane data from cache");
+
 			// Load cached actions
 			const cachedActions = this.loadActionsFromCache(cachedData.actions);
 			allActions.push(...cachedActions);
-			
+
 			// Load cached lanes
 			const cachedLanes = this.loadLanesFromCache(cachedData.lanes);
 			allActions.push(...cachedLanes);
-			
+
 			// Show notification if cache is getting old
 			const cacheStatus = this.dataManager.getCacheStatus();
 			if (cacheStatus.age && cacheStatus.age > 12) {
-				vscode.window.showInformationMessage(
-					'Fastlane cache is getting old. Consider running "Fastlane Autocomplete: Refresh Data" command.',
-					'Refresh Now'
-				).then(selection => {
-					if (selection === 'Refresh Now') {
-						vscode.commands.executeCommand('fastlane-autocomplete.refreshData');
-					}
-				});
+				vscode.window
+					.showInformationMessage(
+						'Fastlane cache is getting old. Consider running "Fastlane Autocomplete: Refresh Data" command.',
+						"Refresh Now"
+					)
+					.then((selection) => {
+						if (selection === "Refresh Now") {
+							vscode.commands.executeCommand("fastlane-autocomplete.refreshData");
+						}
+					});
 			}
 		} else {
-			console.log('No cache found, falling back to CLI/hardcoded data');
-			
+			console.log("No cache found, falling back to CLI/hardcoded data");
+
 			try {
 				// Load real fastlane actions using CLI (fallback)
 				const fastlaneActions = await this.loadFastlaneActionsFromCLI();
@@ -98,19 +104,20 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 					const standardActions = await this.loadStandardFastlaneActions();
 					allActions.push(...standardActions);
 				}
-				
+
 				// Show notification to init cache
-				vscode.window.showInformationMessage(
-					'Initialize Fastlane data cache for better performance?',
-					'Initialize Now'
-				).then(selection => {
-					if (selection === 'Initialize Now') {
-						vscode.commands.executeCommand('fastlane-autocomplete.initData');
-					}
-				});
-				
+				vscode.window
+					.showInformationMessage(
+						"Initialize Fastlane data cache for better performance?",
+						"Initialize Now"
+					)
+					.then((selection) => {
+						if (selection === "Initialize Now") {
+							vscode.commands.executeCommand("fastlane-autocomplete.initData");
+						}
+					});
 			} catch (error) {
-				console.warn('Failed to load actions from fastlane CLI, using fallback:', error);
+				console.warn("Failed to load actions from fastlane CLI, using fallback:", error);
 				// Fallback to existing implementation
 				const standardActions = await this.loadStandardFastlaneActions();
 				allActions.push(...standardActions);
@@ -136,16 +143,18 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 				const paramSnippets = cachedAction.parameters
 					.slice(0, 5) // Limit to first 5 parameters
 					.map((param, index) => {
-						const placeholder = param.defaultValue 
-							? `: "${param.defaultValue}"` 
-							: `: \${${index + 1}:${param.description || 'value'}}`;
+						const placeholder = param.defaultValue
+							? `: "${param.defaultValue}"`
+							: `: \${${index + 1}:${param.description || "value"}}`;
 						return `${param.key}${placeholder}`;
 					})
-					.join(',\n  ');
-				
+					.join(",\n  ");
+
 				item.insertText = new vscode.SnippetString(`${cachedAction.name}(\n  ${paramSnippets}\n)`);
 			} else {
-				item.insertText = new vscode.SnippetString(`${cachedAction.name}(\n  \${1:# parameters}\n)`);
+				item.insertText = new vscode.SnippetString(
+					`${cachedAction.name}(\n  \${1:# parameters}\n)`
+				);
 			}
 
 			actions.push(item);
@@ -173,19 +182,26 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		if (!workspaceRoot) return [];
 
 		try {
-			const { stdout } = await execAsync('fastlane actions', { 
+			const { stdout } = await execAsync("fastlane actions", {
 				cwd: workspaceRoot,
-				timeout: 10000
+				timeout: 10000,
 			});
-			
+
 			const basicActions = this.parseActionsFromCLIOutput(stdout);
-			
+
 			// Pre-load parameter info for commonly used actions
-			const commonActions = ['build_app', 'match', 'upload_to_testflight', 'gradle', 'upload_to_play_store', 'firebase_app_distribution'];
+			const commonActions = [
+				"build_app",
+				"match",
+				"upload_to_testflight",
+				"gradle",
+				"upload_to_play_store",
+				"firebase_app_distribution",
+			];
 			const enhancedActions: vscode.CompletionItem[] = [];
-			
+
 			for (const action of basicActions) {
-				const actionName = typeof action.label === 'string' ? action.label : action.label.label;
+				const actionName = typeof action.label === "string" ? action.label : action.label.label;
 				if (commonActions.includes(actionName)) {
 					// Load parameter info for common actions
 					const enhancedAction = await this.createParameterizedCompletion(actionName);
@@ -196,10 +212,10 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 					enhancedActions.push(action);
 				}
 			}
-			
+
 			return enhancedActions;
 		} catch (error) {
-			console.warn('Failed to get fastlane actions:', error);
+			console.warn("Failed to get fastlane actions:", error);
 			return [];
 		}
 	}
@@ -209,14 +225,14 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		if (!workspaceRoot) return [];
 
 		try {
-			const { stdout } = await execAsync('fastlane lanes --json', { 
+			const { stdout } = await execAsync("fastlane lanes --json", {
 				cwd: workspaceRoot,
-				timeout: 10000
+				timeout: 10000,
 			});
-			
+
 			return this.parseLanesFromJSON(stdout);
 		} catch (error) {
-			console.warn('Failed to get fastlane lanes:', error);
+			console.warn("Failed to get fastlane lanes:", error);
 			// Fallback to file-based parsing
 			return this.loadExistingLanes();
 		}
@@ -230,49 +246,58 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 
 	private parseActionsFromCLIOutput(output: string): vscode.CompletionItem[] {
 		const actions: vscode.CompletionItem[] = [];
-		const lines = output.split('\n');
-		
+		const lines = output.split("\n");
+
 		for (const line of lines) {
 			// Parse fastlane actions table format
 			// Lines with actions start with | and contain action names
-			if (line.includes('|') && !line.includes('Action') && !line.includes('---') && !line.includes('+')) {
-				const parts = line.split('|').map(part => part.trim());
+			if (
+				line.includes("|") &&
+				!line.includes("Action") &&
+				!line.includes("---") &&
+				!line.includes("+")
+			) {
+				const parts = line.split("|").map((part) => part.trim());
 				if (parts.length >= 2 && parts[1]) {
 					// Remove ANSI color codes and extract action name
-					const actionName = parts[1].replace(/\x1b\[[0-9;]*m/g, '').trim();
-					const description = parts.length > 2 ? parts[2].replace(/\x1b\[[0-9;]*m/g, '').trim() : '';
-					
-					if (actionName && /^[a-zA-Z][a-zA-Z0-9_]*$/.test(actionName) && actionName !== '') {
+					const actionName = parts[1].replace(/\x1b\[[0-9;]*m/g, "").trim();
+					const description =
+						parts.length > 2 ? parts[2].replace(/\x1b\[[0-9;]*m/g, "").trim() : "";
+
+					if (actionName && /^[a-zA-Z][a-zA-Z0-9_]*$/.test(actionName) && actionName !== "") {
 						const item = new vscode.CompletionItem(actionName, vscode.CompletionItemKind.Function);
 						item.detail = "Fastlane Action";
 						item.documentation = description || `Available fastlane action: ${actionName}`;
-						
+
 						// Basic insertion - will be enhanced for common actions
-						
+
 						actions.push(item);
 					}
 				}
 			}
 		}
-		
+
 		return actions;
 	}
 
 	private async getActionInfo(actionName: string): Promise<ActionInfo | null> {
 		// Check cache first
 		if (this.actionInfoCache.has(actionName)) {
-			return this.actionInfoCache.get(actionName)!;
+			const cached = this.actionInfoCache.get(actionName);
+			if (cached) {
+				return cached;
+			}
 		}
 
 		const workspaceRoot = this.getWorkspaceRoot();
 		if (!workspaceRoot) return null;
 
 		try {
-			const { stdout } = await execAsync(`fastlane action ${actionName}`, { 
+			const { stdout } = await execAsync(`fastlane action ${actionName}`, {
 				cwd: workspaceRoot,
-				timeout: 10000
+				timeout: 10000,
 			});
-			
+
 			const actionInfo = this.parseActionInfo(actionName, stdout);
 			if (actionInfo) {
 				// Cache the result
@@ -287,43 +312,65 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 	}
 
 	private parseActionInfo(actionName: string, output: string): ActionInfo | null {
-		const lines = output.split('\n');
+		const lines = output.split("\n");
 		const parameters: ActionParameter[] = [];
-		let description = '';
+		let description = "";
 		let inParametersSection = false;
 
 		for (const line of lines) {
 			// Extract description from the main action box
-			if (line.includes('|') && !line.includes('Key') && !line.includes('---') && !line.includes('+') && !inParametersSection) {
-				const cleanLine = line.replace(/\x1b\[[0-9;]*m/g, '').replace(/\|/g, '').trim();
-				if (cleanLine && !cleanLine.includes('More information') && !cleanLine.includes('Created by')) {
+			if (
+				line.includes("|") &&
+				!line.includes("Key") &&
+				!line.includes("---") &&
+				!line.includes("+") &&
+				!inParametersSection
+			) {
+				const cleanLine = line
+					.replace(/\x1b\[[0-9;]*m/g, "")
+					.replace(/\|/g, "")
+					.trim();
+				if (
+					cleanLine &&
+					!cleanLine.includes("More information") &&
+					!cleanLine.includes("Created by")
+				) {
 					description = cleanLine;
 				}
 			}
 
 			// Check if we're entering the parameters section
-			if (line.includes('Options') && line.includes(actionName)) {
+			if (line.includes("Options") && line.includes(actionName)) {
 				inParametersSection = true;
 				continue;
 			}
 
 			// Parse parameter rows in the options table
-			if (inParametersSection && line.includes('|') && !line.includes('Key') && !line.includes('---') && !line.includes('+')) {
-				const parts = line.split('|').map(part => part.replace(/\x1b\[[0-9;]*m/g, '').trim()).filter(Boolean);
-				
+			if (
+				inParametersSection &&
+				line.includes("|") &&
+				!line.includes("Key") &&
+				!line.includes("---") &&
+				!line.includes("+")
+			) {
+				const parts = line
+					.split("|")
+					.map((part) => part.replace(/\x1b\[[0-9;]*m/g, "").trim())
+					.filter(Boolean);
+
 				if (parts.length >= 2) {
 					const key = parts[0];
-					const desc = parts[1] || '';
-					const envVar = parts.length > 2 ? parts[2] : '';
-					const defaultVal = parts.length > 3 ? parts[3] : '';
+					const desc = parts[1] || "";
+					const envVar = parts.length > 2 ? parts[2] : "";
+					const defaultVal = parts.length > 3 ? parts[3] : "";
 
-					if (key && key !== '' && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) {
+					if (key && key !== "" && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) {
 						parameters.push({
 							key,
 							description: desc,
 							envVar: envVar || undefined,
 							defaultValue: defaultVal || undefined,
-							required: !defaultVal && !envVar
+							required: !defaultVal && !envVar,
 						});
 					}
 				}
@@ -333,14 +380,14 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		return {
 			name: actionName,
 			description: description || `Fastlane action: ${actionName}`,
-			parameters
+			parameters,
 		};
 	}
 
 	private async createParameterizedCompletion(actionName: string): Promise<vscode.CompletionItem> {
 		const actionInfo = await this.getActionInfo(actionName);
 		const item = new vscode.CompletionItem(actionName, vscode.CompletionItemKind.Function);
-		
+
 		item.detail = "Fastlane Action";
 		item.documentation = actionInfo?.description || `Available fastlane action: ${actionName}`;
 
@@ -349,11 +396,13 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			const paramSnippets = actionInfo.parameters
 				.slice(0, 5) // Limit to first 5 parameters to avoid overwhelming
 				.map((param, index) => {
-					const placeholder = param.defaultValue ? `: "${param.defaultValue}"` : `: \${${index + 1}:${param.description || 'value'}}`;
+					const placeholder = param.defaultValue
+						? `: "${param.defaultValue}"`
+						: `: \${${index + 1}:${param.description || "value"}}`;
 					return `${param.key}${placeholder}`;
 				})
-				.join(',\n  ');
-			
+				.join(",\n  ");
+
 			item.insertText = new vscode.SnippetString(`${actionName}(\n  ${paramSnippets}\n)`);
 		} else {
 			item.insertText = new vscode.SnippetString(`${actionName}(\n  \${1:# parameters}\n)`);
@@ -364,28 +413,30 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 
 	private parseLanesFromJSON(jsonOutput: string): vscode.CompletionItem[] {
 		const lanes: vscode.CompletionItem[] = [];
-		
+
 		try {
 			const lanesData = JSON.parse(jsonOutput);
-			
+
 			// Parse lanes from JSON structure
 			for (const [platform, platformLanes] of Object.entries(lanesData as Record<string, any>)) {
-				if (typeof platformLanes === 'object' && platformLanes) {
+				if (typeof platformLanes === "object" && platformLanes) {
 					for (const [laneName, laneInfo] of Object.entries(platformLanes)) {
 						const item = new vscode.CompletionItem(laneName, vscode.CompletionItemKind.Method);
 						item.detail = `Lane (${platform})`;
-						
-						const description = (laneInfo as any)?.description || '';
-						item.documentation = description ? `${description} [Platform: ${platform}]` : `Lane: ${laneName} [Platform: ${platform}]`;
+
+						const description = (laneInfo as any)?.description || "";
+						item.documentation = description
+							? `${description} [Platform: ${platform}]`
+							: `Lane: ${laneName} [Platform: ${platform}]`;
 						item.insertText = new vscode.SnippetString(`${laneName}(\${1:options})`);
 						lanes.push(item);
 					}
 				}
 			}
 		} catch (error) {
-			console.warn('Failed to parse lanes JSON:', error);
+			console.warn("Failed to parse lanes JSON:", error);
 		}
-		
+
 		return lanes;
 	}
 
@@ -422,6 +473,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		const laneRegex = /(?:^|\n)\s*(?:private_)?lane\s+:(\w+)/g;
 		let match: RegExpExecArray | null;
 
+		// biome-ignore lint/suspicious/noAssignInExpressions: Standard pattern for regex exec loops
 		while ((match = laneRegex.exec(content)) !== null) {
 			const laneName = match[1];
 			const item = new vscode.CompletionItem(laneName, vscode.CompletionItemKind.Method);

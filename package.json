@@ -55,7 +55,7 @@
         "category": "Fastlane Autocomplete"
       },
       {
-        "command": "fastlane-autocomplete.refreshData", 
+        "command": "fastlane-autocomplete.refreshData",
         "title": "Refresh Fastlane Data",
         "category": "Fastlane Autocomplete"
       }

@@ -1,8 +1,8 @@
-import * as fs from "fs";
-import * as path from "path";
+import { exec } from "node:child_process";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { promisify } from "node:util";
 import * as vscode from "vscode";
-import { exec } from "child_process";
-import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
@@ -41,11 +41,11 @@ export class FastlaneDataManager {
 	constructor() {
 		this.workspaceRoot = this.getWorkspaceRoot();
 		if (this.workspaceRoot) {
-			this.cacheDir = path.join(this.workspaceRoot, '.vscode', 'fastlane-cache');
-			this.cacheFile = path.join(this.cacheDir, 'fastlane-data.json');
+			this.cacheDir = path.join(this.workspaceRoot, ".vscode", "fastlane-cache");
+			this.cacheFile = path.join(this.cacheDir, "fastlane-data.json");
 		} else {
-			this.cacheDir = '';
-			this.cacheFile = '';
+			this.cacheDir = "";
+			this.cacheFile = "";
 		}
 	}
 
@@ -57,16 +57,16 @@ export class FastlaneDataManager {
 
 	async initializeData(): Promise<void> {
 		if (!this.workspaceRoot) {
-			throw new Error('No workspace found');
+			throw new Error("No workspace found");
 		}
 
 		// Use the Node.js script we created
-		const scriptPath = path.join(__dirname, '..', 'scripts', 'init-fastlane-data.js');
-		
+		const scriptPath = path.join(__dirname, "..", "scripts", "init-fastlane-data.js");
+
 		try {
-			await execAsync(`node "${scriptPath}"`, { 
+			await execAsync(`node "${scriptPath}"`, {
 				cwd: this.workspaceRoot,
-				timeout: 120000 // 2 minutes timeout
+				timeout: 120000, // 2 minutes timeout
 			});
 		} catch (error) {
 			throw new Error(`Failed to initialize fastlane data: ${error}`);
@@ -83,21 +83,21 @@ export class FastlaneDataManager {
 		}
 
 		try {
-			const content = fs.readFileSync(this.cacheFile, 'utf8');
+			const content = fs.readFileSync(this.cacheFile, "utf8");
 			const data = JSON.parse(content) as FastlaneCacheData;
-			
+
 			// Validate cache age (24 hours)
 			const cacheTime = new Date(data.timestamp);
 			const now = new Date();
 			const hoursDiff = (now.getTime() - cacheTime.getTime()) / (1000 * 60 * 60);
-			
+
 			if (hoursDiff > 24) {
-				console.warn('Fastlane cache is older than 24 hours, consider refreshing');
+				console.warn("Fastlane cache is older than 24 hours, consider refreshing");
 			}
-			
+
 			return data;
 		} catch (error) {
-			console.error('Failed to load cached fastlane data:', error);
+			console.error("Failed to load cached fastlane data:", error);
 			return null;
 		}
 	}
@@ -108,16 +108,16 @@ export class FastlaneDataManager {
 		}
 
 		try {
-			const content = fs.readFileSync(this.cacheFile, 'utf8');
+			const content = fs.readFileSync(this.cacheFile, "utf8");
 			const data = JSON.parse(content) as FastlaneCacheData;
-			
+
 			// Check if cache is less than 24 hours old
 			const cacheTime = new Date(data.timestamp);
 			const now = new Date();
 			const hoursDiff = (now.getTime() - cacheTime.getTime()) / (1000 * 60 * 60);
-			
+
 			return hoursDiff < 24;
-		} catch (error) {
+		} catch (_error) {
 			return false;
 		}
 	}
@@ -128,19 +128,19 @@ export class FastlaneDataManager {
 		}
 
 		try {
-			const content = fs.readFileSync(this.cacheFile, 'utf8');
+			const content = fs.readFileSync(this.cacheFile, "utf8");
 			const data = JSON.parse(content) as FastlaneCacheData;
-			
+
 			const cacheTime = new Date(data.timestamp);
 			const now = new Date();
 			const hoursDiff = (now.getTime() - cacheTime.getTime()) / (1000 * 60 * 60);
-			
+
 			return {
 				exists: true,
 				valid: hoursDiff < 24,
-				age: hoursDiff
+				age: hoursDiff,
 			};
-		} catch (error) {
+		} catch (_error) {
 			return { exists: true, valid: false };
 		}
 	}

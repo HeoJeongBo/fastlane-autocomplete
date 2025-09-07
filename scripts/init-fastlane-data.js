@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const { exec } = require('child_process');
-const { promisify } = require('util');
+const fs = require('node:fs');
+const path = require('node:path');
+const { exec } = require('node:child_process');
+const { promisify } = require('node:util');
 
 const execAsync = promisify(exec);
 
