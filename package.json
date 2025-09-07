@@ -80,6 +80,9 @@
     "check:fix": "biome check --write .",
     "release": "release-it",
     "release:dry": "release-it --dry-run",
+    "release:patch": "release-it patch",
+    "release:minor": "release-it minor",
+    "release:major": "release-it major",
     "vscode:publish": "vsce publish",
     "fastlane:init": "node ./scripts/init-fastlane-data.js"
   },
