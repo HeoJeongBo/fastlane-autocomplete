@@ -28,9 +28,16 @@
     "languages": [
       {
         "id": "fastfile",
-        "aliases": ["Fastfile", "fastfile"],
-        "extensions": [".Fastfile"],
-        "filenames": ["Fastfile"],
+        "aliases": [
+          "Fastfile",
+          "fastfile"
+        ],
+        "extensions": [
+          ".Fastfile"
+        ],
+        "filenames": [
+          "Fastfile"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -47,11 +54,23 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "build": "bun run compile",
-    "dev": "bun run watch"
+    "dev": "bun run watch",
+    "prepare": "husky",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "release": "release-it",
+    "release:dry": "release-it --dry-run"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
+    "@biomejs/biome": "2.2.3",
+    "@release-it/conventional-changelog": "10.0.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "husky": "9.1.7",
+    "release-it": "19.0.4",
     "typescript": "^4.9.4"
   }
 }
