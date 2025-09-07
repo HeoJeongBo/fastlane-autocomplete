@@ -1,0 +1,13 @@
+[install]
+# Use exact versions
+exact = true
+
+# Enable lockfile
+lockfile = true
+
+# Install dev dependencies by default
+production = false
+
+[build]
+# Enable TypeScript support
+target = "node"

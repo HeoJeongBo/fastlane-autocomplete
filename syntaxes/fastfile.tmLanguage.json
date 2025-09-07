@@ -1,0 +1,135 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Fastfile",
+  "scopeName": "source.fastfile",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#fastlane-actions"
+    },
+    {
+      "include": "#lane-definitions"
+    },
+    {
+      "include": "#variables"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#symbols"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.hash.fastfile",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.fastfile",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.fastfile",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.fastfile",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.fastfile",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.fastfile",
+          "match": "\\b(if|unless|else|elsif|end|case|when|while|until|for|do|break|next|return|yield|begin|rescue|ensure|retry|raise)\\b"
+        },
+        {
+          "name": "keyword.other.fastfile",
+          "match": "\\b(def|class|module|private|public|protected|include|extend|require|load)\\b"
+        }
+      ]
+    },
+    "fastlane-actions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.fastlane.action",
+          "match": "\\b(app_store_connect_api_key|match|update_code_signing_settings|build_app|get_version_number|latest_testflight_build_number|increment_build_number|update_project_team|upload_to_testflight|android_get_version_name|firebase_app_distribution_get_latest_release|increment_version_code|gradle|google_play_track_version_codes|upload_to_play_store|firebase_app_distribution)\\b"
+        },
+        {
+          "name": "support.function.builtin.fastlane",
+          "match": "\\b(puts|system|lane_context)\\b"
+        }
+      ]
+    },
+    "lane-definitions": {
+      "patterns": [
+        {
+          "name": "keyword.declaration.lane.fastfile",
+          "match": "\\b(lane|private_lane|desc)\\b"
+        },
+        {
+          "name": "entity.name.function.lane.fastfile",
+          "match": "(?<=lane\\s|private_lane\\s):([a-zA-Z_][a-zA-Z0-9_]*)"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.environment.fastfile",
+          "match": "ENV\\['[^']*'\\]"
+        },
+        {
+          "name": "variable.other.shared-values.fastfile",
+          "match": "SharedValues::[A-Z_]+"
+        },
+        {
+          "name": "variable.other.fastfile",
+          "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.fastfile",
+          "match": "\\b\\d+(\\.\\d+)?\\b"
+        }
+      ]
+    },
+    "symbols": {
+      "patterns": [
+        {
+          "name": "constant.other.symbol.fastfile",
+          "match": ":[a-zA-Z_][a-zA-Z0-9_]*"
+        }
+      ]
+    }
+  }
+}
