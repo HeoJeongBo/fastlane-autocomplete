@@ -39,7 +39,7 @@ export class FastlaneDocsFetcher {
 				// Cache the result
 				this.actionCache.set(actionName, {
 					data: actionInfo,
-					timestamp: Date.now()
+					timestamp: Date.now(),
 				});
 				return actionInfo;
 			}
@@ -56,23 +56,43 @@ export class FastlaneDocsFetcher {
 	async getCommonActions(): Promise<ActionInfo[]> {
 		const commonActionNames = [
 			// iOS Actions
-			"build_app", "gym", "match", "upload_to_testflight", "get_version_number",
-			"increment_build_number", "latest_testflight_build_number", "app_store_connect_api_key",
-			"update_code_signing_settings", "update_project_team",
+			"build_app",
+			"gym",
+			"match",
+			"upload_to_testflight",
+			"get_version_number",
+			"increment_build_number",
+			"latest_testflight_build_number",
+			"app_store_connect_api_key",
+			"update_code_signing_settings",
+			"update_project_team",
 
 			// Android Actions
-			"gradle", "android_get_version_name", "increment_version_code",
-			"google_play_track_version_codes", "upload_to_play_store", "supply",
+			"gradle",
+			"android_get_version_name",
+			"increment_version_code",
+			"google_play_track_version_codes",
+			"upload_to_play_store",
+			"supply",
 
 			// Generic Actions
-			"sh", "puts", "git_add", "git_commit", "push_to_git_remote",
-			"create_pull_request", "ensure_git_status_clean", "notification", "slack",
+			"sh",
+			"puts",
+			"git_add",
+			"git_commit",
+			"push_to_git_remote",
+			"create_pull_request",
+			"ensure_git_status_clean",
+			"notification",
+			"slack",
 
 			// Testing Actions
-			"scan", "run_tests", "swiftlint",
+			"scan",
+			"run_tests",
+			"swiftlint",
 
 			// Plugin Actions (common ones)
-			"firebase_app_distribution"
+			"firebase_app_distribution",
 		];
 
 		const actions: ActionInfo[] = [];
@@ -81,18 +101,18 @@ export class FastlaneDocsFetcher {
 		const batchSize = 5;
 		for (let i = 0; i < commonActionNames.length; i += batchSize) {
 			const batch = commonActionNames.slice(i, i + batchSize);
-			const batchPromises = batch.map(actionName => this.getActionInfo(actionName));
+			const batchPromises = batch.map((actionName) => this.getActionInfo(actionName));
 			const batchResults = await Promise.allSettled(batchPromises);
 
 			for (const result of batchResults) {
-				if (result.status === 'fulfilled' && result.value) {
+				if (result.status === "fulfilled" && result.value) {
 					actions.push(result.value);
 				}
 			}
 
 			// Add a small delay between batches to be respectful to the server
 			if (i + batchSize < commonActionNames.length) {
-				await new Promise(resolve => setTimeout(resolve, 100));
+				await new Promise((resolve) => setTimeout(resolve, 100));
 			}
 		}
 
@@ -132,8 +152,8 @@ export class FastlaneDocsFetcher {
 							parameters.push({
 								key: paramName.trim(),
 								description: description.trim(),
-								required: !match.toLowerCase().includes('optional'),
-								type: this.inferParameterType(description)
+								required: !match.toLowerCase().includes("optional"),
+								type: this.inferParameterType(description),
 							});
 						}
 					}
@@ -141,15 +161,15 @@ export class FastlaneDocsFetcher {
 			}
 
 			// Extract platforms
-			if (response.toLowerCase().includes('ios')) platforms.push('ios');
-			if (response.toLowerCase().includes('android')) platforms.push('android');
-			if (response.toLowerCase().includes('mac')) platforms.push('mac');
+			if (response.toLowerCase().includes("ios")) platforms.push("ios");
+			if (response.toLowerCase().includes("android")) platforms.push("android");
+			if (response.toLowerCase().includes("mac")) platforms.push("mac");
 
 			return {
 				name: actionName,
 				description: `Fastlane action: ${actionName}`,
 				parameters,
-				platforms: platforms.length > 0 ? platforms : ['ios', 'android']
+				platforms: platforms.length > 0 ? platforms : ["ios", "android"],
 			};
 		} catch (error) {
 			console.warn(`Failed to parse action info for ${actionName}:`, error);
@@ -163,20 +183,28 @@ export class FastlaneDocsFetcher {
 	private inferParameterType(description: string): string {
 		const lowerDesc = description.toLowerCase();
 
-		if (lowerDesc.includes('boolean') || lowerDesc.includes('true') || lowerDesc.includes('false')) {
-			return 'boolean';
+		if (
+			lowerDesc.includes("boolean") ||
+			lowerDesc.includes("true") ||
+			lowerDesc.includes("false")
+		) {
+			return "boolean";
 		}
-		if (lowerDesc.includes('number') || lowerDesc.includes('integer') || lowerDesc.includes('count')) {
-			return 'number';
+		if (
+			lowerDesc.includes("number") ||
+			lowerDesc.includes("integer") ||
+			lowerDesc.includes("count")
+		) {
+			return "number";
 		}
-		if (lowerDesc.includes('array') || lowerDesc.includes('list')) {
-			return 'array';
+		if (lowerDesc.includes("array") || lowerDesc.includes("list")) {
+			return "array";
 		}
-		if (lowerDesc.includes('hash') || lowerDesc.includes('object')) {
-			return 'object';
+		if (lowerDesc.includes("hash") || lowerDesc.includes("object")) {
+			return "object";
 		}
 
-		return 'string';
+		return "string";
 	}
 
 	/**
@@ -202,7 +230,7 @@ export class FastlaneDocsFetcher {
 
 		return {
 			size: this.actionCache.size,
-			oldestAge
+			oldestAge,
 		};
 	}
 }

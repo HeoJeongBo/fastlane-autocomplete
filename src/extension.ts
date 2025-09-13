@@ -57,7 +57,12 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
-	context.subscriptions.push(fastfileCompletionDisposable, rubyCompletionDisposable, initDataCommand, refreshDataCommand);
+	context.subscriptions.push(
+		fastfileCompletionDisposable,
+		rubyCompletionDisposable,
+		initDataCommand,
+		refreshDataCommand
+	);
 }
 
 export function deactivate() {}

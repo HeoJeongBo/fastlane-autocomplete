@@ -71,9 +71,9 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		if (match) {
 			const actionName = match[1];
 			const parameterContent = match[2];
-			
+
 			console.log(`Found action call: ${actionName}, params: "${parameterContent}"`);
-			
+
 			// Only block if we're clearly inside parameters (not at the start)
 			// Allow completion at the very beginning of parameters
 			if (parameterContent.trim().length > 0) {
@@ -95,7 +95,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		// 1. Empty line or just whitespace
 		// 2. Line starts with typical action patterns (letters followed by optional underscore/letters)
 		// 3. After certain keywords or punctuation that suggests a new statement
-		
+
 		if (trimmedText.length === 0 || lineText.endsWith(" ")) {
 			return true;
 		}
@@ -108,7 +108,12 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		}
 
 		// Allow after common statement endings
-		if (lineText.endsWith(")") || lineText.endsWith(",") || lineText.endsWith("\n") || lineText.endsWith(";")) {
+		if (
+			lineText.endsWith(")") ||
+			lineText.endsWith(",") ||
+			lineText.endsWith("\n") ||
+			lineText.endsWith(";")
+		) {
 			return true;
 		}
 
@@ -135,27 +140,27 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 	private formatDefaultValue(value: string): string {
 		// Try to infer the correct type for the default value
 		if (!value) return '""';
-		
+
 		// Check for boolean values
-		if (value.toLowerCase() === 'true' || value.toLowerCase() === 'false') {
+		if (value.toLowerCase() === "true" || value.toLowerCase() === "false") {
 			return value.toLowerCase();
 		}
-		
+
 		// Check for numeric values
 		if (/^\d+$/.test(value)) {
 			return value;
 		}
-		
+
 		// Check for arrays
-		if (value.startsWith('[') && value.endsWith(']')) {
+		if (value.startsWith("[") && value.endsWith("]")) {
 			return value;
 		}
-		
+
 		// Check for hashes/objects
-		if (value.startsWith('{') && value.endsWith('}')) {
+		if (value.startsWith("{") && value.endsWith("}")) {
 			return value;
 		}
-		
+
 		// Default to string
 		return `"${value}"`;
 	}
@@ -163,80 +168,84 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 	private getShortParameterName(key: string, description?: string, actionName?: string): string {
 		// Action-specific mappings for better placeholders
 		const actionSpecificMappings: Record<string, Record<string, string>> = {
-			'build_app': {
-				'workspace': 'path/to/App.xcworkspace',
-				'project': 'path/to/App.xcodeproj',
-				'scheme': 'YourScheme',
-				'export_method': 'app-store',
-				'configuration': 'Release',
-				'output_directory': './build',
-				'output_name': 'App'
+			build_app: {
+				workspace: "path/to/App.xcworkspace",
+				project: "path/to/App.xcodeproj",
+				scheme: "YourScheme",
+				export_method: "app-store",
+				configuration: "Release",
+				output_directory: "./build",
+				output_name: "App",
 			},
-			'match': {
-				'type': 'development',
-				'app_identifier': 'com.yourcompany.app',
-				'git_url': 'https://github.com/user/certs.git',
-				'username': 'your.email@company.com',
-				'team_id': 'XXXXXXXXXX',
-				'readonly': 'false',
-				'storage_mode': 'git'
+			match: {
+				type: "development",
+				app_identifier: "com.yourcompany.app",
+				git_url: "https://github.com/user/certs.git",
+				username: "your.email@company.com",
+				team_id: "XXXXXXXXXX",
+				readonly: "false",
+				storage_mode: "git",
 			},
-			'upload_to_testflight': {
-				'username': 'your.email@company.com',
-				'app_identifier': 'com.yourcompany.app',
-				'team_id': 'XXXXXXXXXX',
-				'ipa': './build/App.ipa',
-				'skip_waiting_for_build_processing': 'true'
+			upload_to_testflight: {
+				username: "your.email@company.com",
+				app_identifier: "com.yourcompany.app",
+				team_id: "XXXXXXXXXX",
+				ipa: "./build/App.ipa",
+				skip_waiting_for_build_processing: "true",
 			},
-			'gradle': {
-				'project_dir': './android',
-				'tasks': 'assembleRelease',
-				'properties': '{}',
-				'gradle_path': './gradlew'
+			gradle: {
+				project_dir: "./android",
+				tasks: "assembleRelease",
+				properties: "{}",
+				gradle_path: "./gradlew",
 			},
-			'firebase_app_distribution': {
-				'app': '1:123456789:ios:abcd1234',
-				'ipa_path': './build/App.ipa',
-				'apk_path': './app/build/outputs/apk/release/app-release.apk',
-				'groups': 'internal-testers',
-				'release_notes': 'New build available for testing'
+			firebase_app_distribution: {
+				app: "1:123456789:ios:abcd1234",
+				ipa_path: "./build/App.ipa",
+				apk_path: "./app/build/outputs/apk/release/app-release.apk",
+				groups: "internal-testers",
+				release_notes: "New build available for testing",
 			},
-			'upload_to_play_store': {
-				'package_name': 'com.yourcompany.app',
-				'track': 'internal',
-				'json_key': './android/key.json',
-				'aab': './android/app/build/outputs/bundle/release/app-release.aab'
-			}
+			upload_to_play_store: {
+				package_name: "com.yourcompany.app",
+				track: "internal",
+				json_key: "./android/key.json",
+				aab: "./android/app/build/outputs/bundle/release/app-release.aab",
+			},
 		};
 
 		// Check action-specific mappings first
-		if (actionName && actionSpecificMappings[actionName] && actionSpecificMappings[actionName][key]) {
+		if (
+			actionName &&
+			actionSpecificMappings[actionName] &&
+			actionSpecificMappings[actionName][key]
+		) {
 			return actionSpecificMappings[actionName][key];
 		}
 
 		// Generic common mappings
 		const commonMappings: Record<string, string> = {
-			'app_identifier': 'com.company.app',
-			'workspace': 'path/to/workspace',
-			'scheme': 'scheme_name',
-			'export_method': 'app-store',
-			'type': 'development',
-			'readonly': 'false',
-			'username': 'your.email@company.com',
-			'password': 'password',
-			'team_id': 'XXXXXXXXXX',
-			'project_dir': './project',
-			'tasks': 'build_task',
-			'track': 'internal',
-			'package_name': 'com.company.app',
-			'version': '1.0.0',
-			'initial_build_number': '1',
-			'platform': 'ios',
-			'api_key_path': 'path/to/key.json',
-			'api_key': 'api_key_info',
-			'git_url': 'https://github.com/user/repo.git',
-			'storage_mode': 'git',
-			'keychain_name': 'login.keychain'
+			app_identifier: "com.company.app",
+			workspace: "path/to/workspace",
+			scheme: "scheme_name",
+			export_method: "app-store",
+			type: "development",
+			readonly: "false",
+			username: "your.email@company.com",
+			password: "password",
+			team_id: "XXXXXXXXXX",
+			project_dir: "./project",
+			tasks: "build_task",
+			track: "internal",
+			package_name: "com.company.app",
+			version: "1.0.0",
+			initial_build_number: "1",
+			platform: "ios",
+			api_key_path: "path/to/key.json",
+			api_key: "api_key_info",
+			git_url: "https://github.com/user/repo.git",
+			storage_mode: "git",
+			keychain_name: "login.keychain",
 		};
 
 		if (commonMappings[key]) {
@@ -250,7 +259,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 
 		// Use first word of description if available and short
 		if (description) {
-			const firstWord = description.split(' ')[0];
+			const firstWord = description.split(" ")[0];
 			if (firstWord.length <= 15) {
 				return firstWord.toLowerCase();
 			}
@@ -340,7 +349,9 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		console.log(`Loading ${cachedActions.length} actions from cache`);
 
 		for (const cachedAction of cachedActions) {
-			console.log(`Processing cached action: ${cachedAction.name} with ${cachedAction.parameters?.length || 0} parameters`);
+			console.log(
+				`Processing cached action: ${cachedAction.name} with ${cachedAction.parameters?.length || 0} parameters`
+			);
 
 			const item = new vscode.CompletionItem(cachedAction.name, vscode.CompletionItemKind.Function);
 			item.detail = "Fastlane Action (Cached)";
@@ -348,18 +359,25 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 
 			if (cachedAction.parameters && cachedAction.parameters.length > 0) {
 				// Prioritize required parameters, then important optional ones
-				const requiredParams = cachedAction.parameters.filter(p => p.required);
-				const optionalParams = cachedAction.parameters.filter(p => !p.required);
+				const requiredParams = cachedAction.parameters.filter((p) => p.required);
+				const optionalParams = cachedAction.parameters.filter((p) => !p.required);
 
 				// Limit to most essential parameters (3-5 typically)
 				const selectedParams = [...requiredParams, ...optionalParams].slice(0, 5);
 
-				console.log(`[${cachedAction.name}] Selected parameters:`, selectedParams.map(p => `${p.key}(${p.required ? 'required' : 'optional'})`));
+				console.log(
+					`[${cachedAction.name}] Selected parameters:`,
+					selectedParams.map((p) => `${p.key}(${p.required ? "required" : "optional"})`)
+				);
 
 				const paramSnippets = selectedParams
 					.map((param, index) => {
 						// Use the action-aware parameter name method
-						const shortDesc = this.getShortParameterName(param.key, param.description, cachedAction.name);
+						const shortDesc = this.getShortParameterName(
+							param.key,
+							param.description,
+							cachedAction.name
+						);
 						const placeholder = `\${${index + 1}:${shortDesc}}`;
 						return `${param.key}: ${placeholder}`;
 					})
@@ -402,7 +420,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			const { stdout } = await execAsync("fastlane actions", {
 				cwd: workspaceRoot,
 				timeout: 10000,
-				env: { ...process.env, COLUMNS: '200' }
+				env: { ...process.env, COLUMNS: "200" },
 			});
 
 			const basicActions = this.parseActionsFromCLIOutput(stdout);
@@ -516,14 +534,16 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			const { stdout } = await execAsync(`fastlane action ${actionName}`, {
 				cwd: workspaceRoot,
 				timeout: 10000,
-				env: { ...process.env, COLUMNS: '200' }
+				env: { ...process.env, COLUMNS: "200" },
 			});
 
 			const actionInfo = this.parseActionInfo(actionName, stdout);
 			if (actionInfo) {
 				// Cache the result with action name as key to ensure uniqueness
 				this.actionInfoCache.set(actionName, actionInfo);
-				console.log(`Cached action info for ${actionName} with ${actionInfo.parameters.length} parameters`);
+				console.log(
+					`Cached action info for ${actionName} with ${actionInfo.parameters.length} parameters`
+				);
 				return actionInfo;
 			}
 		} catch (error) {
@@ -555,8 +575,12 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 							.replace(/\x1b\[[0-9;]*m/g, "")
 							.replace(/^\||\|$/g, "")
 							.trim();
-						if (cleanDesc && !cleanDesc.includes("More information") &&
-							!cleanDesc.includes("Created by") && !cleanDesc.includes("Author")) {
+						if (
+							cleanDesc &&
+							!cleanDesc.includes("More information") &&
+							!cleanDesc.includes("Created by") &&
+							!cleanDesc.includes("Author")
+						) {
 							description = cleanDesc;
 							break;
 						}
@@ -565,10 +589,12 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			}
 
 			// Look for parameter section headers more specifically
-			if (line.includes("Options") &&
+			if (
+				line.includes("Options") &&
 				!line.includes("Output") &&
 				!line.includes("Return") &&
-				(line.includes("Description") || line.includes("Environment") || line.includes("Default"))) {
+				(line.includes("Description") || line.includes("Environment") || line.includes("Default"))
+			) {
 				inParametersSection = true;
 				sectionHeaderFound = true;
 				console.log(`[${actionName}] Found parameter section at line ${i}: ${line}`);
@@ -576,10 +602,15 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			}
 
 			// Reset if we hit Output Variables or Return Value sections
-			if (inParametersSection &&
-				(line.includes("Output Variables") || line.includes("Return Value") ||
-				 line.includes("Output") && line.includes("Variables"))) {
-				console.log(`[${actionName}] Stopping parameter parsing - found output section at: ${line}`);
+			if (
+				inParametersSection &&
+				(line.includes("Output Variables") ||
+					line.includes("Return Value") ||
+					(line.includes("Output") && line.includes("Variables")))
+			) {
+				console.log(
+					`[${actionName}] Stopping parameter parsing - found output section at: ${line}`
+				);
 				inParametersSection = false;
 				break;
 			}
@@ -594,7 +625,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 				const parts = line
 					.split("|")
 					.map((part) => part.replace(/\x1b\[[0-9;]*m/g, "").trim())
-					.filter(part => part !== "");
+					.filter((part) => part !== "");
 
 				console.log(`[${actionName}] Parsing parameter line: ${line}`);
 				console.log(`[${actionName}] Parts:`, parts);
@@ -606,10 +637,15 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 					const defaultVal = parts.length > 3 ? parts[3] : "";
 
 					// More flexible key validation - exclude table headers
-					if (key && key !== "" && key !== "Key" &&
+					if (
+						key &&
+						key !== "" &&
+						key !== "Key" &&
 						/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key) &&
-						!key.includes("Description") && !key.includes("Env") && !key.includes("Default")) {
-
+						!key.includes("Description") &&
+						!key.includes("Env") &&
+						!key.includes("Default")
+					) {
 						// Action-specific required parameter detection
 						const isRequired = this.isParameterRequired(actionName, key, defaultVal, envVar);
 
@@ -617,7 +653,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 							key,
 							description: desc,
 							envVar: envVar || undefined,
-							defaultValue: (defaultVal && defaultVal !== "*") ? defaultVal : undefined,
+							defaultValue: defaultVal && defaultVal !== "*" ? defaultVal : undefined,
 							required: isRequired,
 						};
 
@@ -628,9 +664,14 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			}
 
 			// Stop parsing if we hit another section
-			if (inParametersSection && sectionHeaderFound &&
-				(line.includes("More information") || line.includes("Lane Variables") ||
-				 line.includes("Output Variables") || line.includes("Return Value"))) {
+			if (
+				inParametersSection &&
+				sectionHeaderFound &&
+				(line.includes("More information") ||
+					line.includes("Lane Variables") ||
+					line.includes("Output Variables") ||
+					line.includes("Return Value"))
+			) {
 				console.log(`[${actionName}] Stopping parameter parsing at: ${line}`);
 				break;
 			}
@@ -645,17 +686,22 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		};
 	}
 
-	private isParameterRequired(actionName: string, key: string, defaultVal: string, envVar: string): boolean {
+	private isParameterRequired(
+		actionName: string,
+		key: string,
+		defaultVal: string,
+		envVar: string
+	): boolean {
 		// Action-specific required parameter mappings
 		const requiredParams: Record<string, string[]> = {
-			'build_app': ['scheme'],
-			'match': ['type', 'app_identifier'],
-			'upload_to_testflight': ['app_identifier'],
-			'gradle': ['tasks'],
-			'upload_to_play_store': ['package_name', 'track'],
-			'firebase_app_distribution': ['app'],
-			'get_version_number': [],
-			'latest_testflight_build_number': ['app_identifier']
+			build_app: ["scheme"],
+			match: ["type", "app_identifier"],
+			upload_to_testflight: ["app_identifier"],
+			gradle: ["tasks"],
+			upload_to_play_store: ["package_name", "track"],
+			firebase_app_distribution: ["app"],
+			get_version_number: [],
+			latest_testflight_build_number: ["app_identifier"],
 		};
 
 		// Check if parameter is explicitly required for this action
@@ -674,17 +720,22 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		item.detail = "Fastlane Action";
 		item.documentation = actionInfo?.description || `Available fastlane action: ${actionName}`;
 
-		console.log(`Creating parameterized completion for ${actionName} with ${actionInfo?.parameters?.length || 0} parameters`);
+		console.log(
+			`Creating parameterized completion for ${actionName} with ${actionInfo?.parameters?.length || 0} parameters`
+		);
 
 		if (actionInfo && actionInfo.parameters.length > 0) {
 			// Prioritize required parameters, then important optional ones
-			const requiredParams = actionInfo.parameters.filter(p => p.required);
-			const optionalParams = actionInfo.parameters.filter(p => !p.required);
+			const requiredParams = actionInfo.parameters.filter((p) => p.required);
+			const optionalParams = actionInfo.parameters.filter((p) => !p.required);
 
 			// Limit to most essential parameters (3-5 typically)
 			const selectedParams = [...requiredParams, ...optionalParams].slice(0, 5);
 
-			console.log(`[${actionName}] Selected parameters for completion:`, selectedParams.map(p => `${p.key}(${p.required ? 'required' : 'optional'})`));
+			console.log(
+				`[${actionName}] Selected parameters for completion:`,
+				selectedParams.map((p) => `${p.key}(${p.required ? "required" : "optional"})`)
+			);
 
 			const paramSnippets = selectedParams
 				.map((param, index) => {
@@ -788,7 +839,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		// Load actions from accurate definitions first
 		for (const [actionName, actionDef] of Object.entries(ACCURATE_ACTION_DEFINITIONS)) {
 			const item = new vscode.CompletionItem(actionName, vscode.CompletionItemKind.Function);
-			item.detail = `Fastlane Action (${actionDef.platforms.join(', ')})`;
+			item.detail = `Fastlane Action (${actionDef.platforms.join(", ")})`;
 			item.documentation = actionDef.description;
 			item.insertText = generateSnippetForAction(actionDef);
 			actions.push(item);
@@ -796,13 +847,15 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 
 		// Add remaining hardcoded actions that aren't in the accurate definitions
 		const remainingActions = this.getAdditionalStandardFastlaneActions();
-		actions.push(...remainingActions.map((action) => {
-			const item = new vscode.CompletionItem(action.label, vscode.CompletionItemKind.Function);
-			item.detail = action.detail;
-			item.documentation = action.documentation;
-			item.insertText = action.insertText;
-			return item;
-		}));
+		actions.push(
+			...remainingActions.map((action) => {
+				const item = new vscode.CompletionItem(action.label, vscode.CompletionItemKind.Function);
+				item.detail = action.detail;
+				item.documentation = action.documentation;
+				item.insertText = action.insertText;
+				return item;
+			})
+		);
 
 		return actions;
 	}
