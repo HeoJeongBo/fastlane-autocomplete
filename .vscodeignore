@@ -19,8 +19,8 @@ README.md
 CHANGELOG.md
 .gitignore
 
-# Scripts
-scripts/
+# Scripts folder is needed for initialization
+# scripts/
 
 # Build artifacts
 *.vsix

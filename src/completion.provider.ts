@@ -39,12 +39,56 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		document: vscode.TextDocument,
 		position: vscode.Position
 	): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
+		// Don't suggest actions if we're inside function parameters
+		if (this.isInsideActionParameters(document, position)) {
+			return [];
+		}
+
 		// Check if we're inside a lane definition or at the top level
 		if (this.isInsideLaneDefinition(document, position) || this.isTopLevel(document, position)) {
 			return this.allActions;
 		}
 
 		return [];
+	}
+
+	private isInsideActionParameters(document: vscode.TextDocument, position: vscode.Position): boolean {
+		const line = document.lineAt(position);
+		const lineText = line.text.substring(0, position.character);
+
+		// Check if we're inside parentheses of an action call
+		// Count unmatched opening parentheses
+		let openParens = 0;
+		let insideString = false;
+		let stringChar = '';
+
+		for (let i = 0; i < lineText.length; i++) {
+			const char = lineText[i];
+			const prevChar = i > 0 ? lineText[i - 1] : '';
+
+			// Handle string literals
+			if ((char === '"' || char === "'") && prevChar !== '\\') {
+				if (!insideString) {
+					insideString = true;
+					stringChar = char;
+				} else if (char === stringChar) {
+					insideString = false;
+					stringChar = '';
+				}
+			}
+
+			// Only count parentheses outside of strings
+			if (!insideString) {
+				if (char === '(') {
+					openParens++;
+				} else if (char === ')') {
+					openParens--;
+				}
+			}
+		}
+
+		// If we have unmatched opening parentheses, we're likely inside action parameters
+		return openParens > 0;
 	}
 
 	private isTopLevel(document: vscode.TextDocument, position: vscode.Position): boolean {
