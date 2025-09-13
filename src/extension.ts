@@ -6,8 +6,18 @@ export function activate(context: vscode.ExtensionContext) {
 	const provider = new FastlaneCompletionProvider();
 	const dataManager = new FastlaneDataManager();
 
-	const completionDisposable = vscode.languages.registerCompletionItemProvider(
+	const fastfileCompletionDisposable = vscode.languages.registerCompletionItemProvider(
 		{ scheme: "file", language: "fastfile" },
+		provider,
+		":",
+		"(",
+		'"',
+		"'",
+		" "
+	);
+
+	const rubyCompletionDisposable = vscode.languages.registerCompletionItemProvider(
+		{ scheme: "file", language: "ruby" },
 		provider,
 		":",
 		"(",
@@ -47,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
-	context.subscriptions.push(completionDisposable, initDataCommand, refreshDataCommand);
+	context.subscriptions.push(fastfileCompletionDisposable, rubyCompletionDisposable, initDataCommand, refreshDataCommand);
 }
 
 export function deactivate() {}

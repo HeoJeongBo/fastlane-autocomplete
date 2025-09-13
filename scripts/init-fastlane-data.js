@@ -75,11 +75,12 @@ class FastlaneDataInitializer {
 
   async loadActions() {
     try {
-      const { stdout } = await execAsync('fastlane actions', { 
+      const { stdout } = await execAsync('fastlane actions', {
         cwd: this.workspaceRoot,
-        timeout: 30000
+        timeout: 30000,
+        env: { ...process.env, COLUMNS: '200' }
       });
-      
+
       return this.parseActionsFromCLIOutput(stdout);
     } catch (error) {
       console.warn('⚠️  Failed to load actions:', error.message);
@@ -213,11 +214,12 @@ class FastlaneDataInitializer {
 
   async loadActionParameters(action) {
     try {
-      const { stdout } = await execAsync(`fastlane action ${action.name}`, { 
+      const { stdout } = await execAsync(`fastlane action ${action.name}`, {
         cwd: this.workspaceRoot,
-        timeout: 10000
+        timeout: 10000,
+        env: { ...process.env, COLUMNS: '200' }
       });
-      
+
       const parameters = this.parseActionParameters(stdout);
       return {
         ...action,
@@ -233,35 +235,64 @@ class FastlaneDataInitializer {
     const lines = output.split('\n');
     const parameters = [];
     let inParametersSection = false;
+    let sectionHeaderFound = false;
 
-    for (const line of lines) {
-      if (line.includes('Options') || line.includes('Parameters')) {
+    console.log(`Parsing parameters from output...`);
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // Look for parameter section headers more flexibly
+      if ((line.includes('Options') || line.includes('Key') || line.includes('Parameter')) &&
+          (line.includes('Description') || line.includes('Environment') || line.includes('Default'))) {
         inParametersSection = true;
+        sectionHeaderFound = true;
+        console.log(`Found parameter section at line ${i}: ${line}`);
         continue;
       }
 
-      if (inParametersSection && line.includes('|') && !line.includes('Key') && !line.includes('---') && !line.includes('+')) {
-        const parts = line.split('|').map(part => part.replace(/\x1b\[[0-9;]*m/g, '').trim()).filter(Boolean);
-        
+      // Parse parameter rows
+      if (inParametersSection && line.includes('|')) {
+        // Skip header separator lines
+        if (line.includes('---') || line.includes('===') || line.includes('+++')) {
+          continue;
+        }
+
+        const parts = line
+          .split('|')
+          .map((part) => part.replace(/\x1b\[[0-9;]*m/g, '').trim())
+          .filter(part => part !== '');
+
         if (parts.length >= 2) {
           const key = parts[0];
           const description = parts[1] || '';
           const envVar = parts.length > 2 ? parts[2] : '';
           const defaultValue = parts.length > 3 ? parts[3] : '';
 
-          if (key && key !== '' && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) {
-            parameters.push({
+          // More flexible key validation
+          if (key && key !== '' && key !== 'Key' && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key)) {
+            const param = {
               key: key,
               description: description,
               envVar: envVar || undefined,
               defaultValue: defaultValue || undefined,
               required: !defaultValue && !envVar
-            });
+            };
+
+            parameters.push(param);
+            console.log(`Added parameter: ${key}`);
           }
         }
       }
+
+      // Stop parsing if we hit another section
+      if (inParametersSection && sectionHeaderFound &&
+          (line.includes('More information') || line.includes('Lane Variables'))) {
+        break;
+      }
     }
 
+    console.log(`Parsed ${parameters.length} parameters`);
     return parameters;
   }
 
