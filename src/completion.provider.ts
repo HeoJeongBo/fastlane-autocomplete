@@ -52,7 +52,10 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		return [];
 	}
 
-	private isInsideActionParameters(document: vscode.TextDocument, position: vscode.Position): boolean {
+	private isInsideActionParameters(
+		document: vscode.TextDocument,
+		position: vscode.Position
+	): boolean {
 		const line = document.lineAt(position);
 		const lineText = line.text.substring(0, position.character);
 
@@ -60,28 +63,28 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		// Count unmatched opening parentheses
 		let openParens = 0;
 		let insideString = false;
-		let stringChar = '';
+		let stringChar = "";
 
 		for (let i = 0; i < lineText.length; i++) {
 			const char = lineText[i];
-			const prevChar = i > 0 ? lineText[i - 1] : '';
+			const prevChar = i > 0 ? lineText[i - 1] : "";
 
 			// Handle string literals
-			if ((char === '"' || char === "'") && prevChar !== '\\') {
+			if ((char === '"' || char === "'") && prevChar !== "\\") {
 				if (!insideString) {
 					insideString = true;
 					stringChar = char;
 				} else if (char === stringChar) {
 					insideString = false;
-					stringChar = '';
+					stringChar = "";
 				}
 			}
 
 			// Only count parentheses outside of strings
 			if (!insideString) {
-				if (char === '(') {
+				if (char === "(") {
 					openParens++;
-				} else if (char === ')') {
+				} else if (char === ")") {
 					openParens--;
 				}
 			}
