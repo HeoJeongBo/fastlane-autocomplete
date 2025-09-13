@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [0.1.4](https://github.com/heojeongbo/fastlane-autocomplete/compare/v0.1.3...v0.1.4) (2025-09-13)
+
+
+### Bug Fixes
+
+* action logic ([b148dff](https://github.com/heojeongbo/fastlane-autocomplete/commit/b148dff7e291f8eb8620bc480a2e5d0706c7e9b2))
+* action parameter infer logic ([dce0b1d](https://github.com/heojeongbo/fastlane-autocomplete/commit/dce0b1d03b6b61a8e71d43fe7e916093b1dc1417))
+* remove scripts in gitigonre ([2c5d8ae](https://github.com/heojeongbo/fastlane-autocomplete/commit/2c5d8ae8e0e79f0edb5329f12e454c5365b60d83))
+
 ## [0.1.3](https://github.com/heojeongbo/fastlane-autocomplete/compare/v0.1.1...v0.1.3) (2025-09-07)
 
 
