@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [0.1.5](https://github.com/heojeongbo/fastlane-autocomplete/compare/v0.1.4...v0.1.5) (2025-09-21)
+
+
+### Bug Fixes
+
+* improve parameter inference logic and code cleanup ([7c570a7](https://github.com/heojeongbo/fastlane-autocomplete/commit/7c570a74b6b8788ed836ac41ba16fbcb98512618))
+* parameter paring logic ([1caf53d](https://github.com/heojeongbo/fastlane-autocomplete/commit/1caf53d122faecc186dd27e6b318bcca57ec19f2))
+* parameter paring logic ([2c729c8](https://github.com/heojeongbo/fastlane-autocomplete/commit/2c729c8813f6629e1eb7465aff51b5f57a546e8c))
+* parameter paring logic ([7971b84](https://github.com/heojeongbo/fastlane-autocomplete/commit/7971b849716fb5476852d28e0b2c6b7a98d567b2))
+
 ## [0.1.4](https://github.com/heojeongbo/fastlane-autocomplete/compare/v0.1.3...v0.1.4) (2025-09-13)
 
 
