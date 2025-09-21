@@ -137,33 +137,6 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		return lineText.substring(start, end);
 	}
 
-	private formatDefaultValue(value: string): string {
-		// Try to infer the correct type for the default value
-		if (!value) return '""';
-
-		// Check for boolean values
-		if (value.toLowerCase() === "true" || value.toLowerCase() === "false") {
-			return value.toLowerCase();
-		}
-
-		// Check for numeric values
-		if (/^\d+$/.test(value)) {
-			return value;
-		}
-
-		// Check for arrays
-		if (value.startsWith("[") && value.endsWith("]")) {
-			return value;
-		}
-
-		// Check for hashes/objects
-		if (value.startsWith("{") && value.endsWith("}")) {
-			return value;
-		}
-
-		// Default to string
-		return `"${value}"`;
-	}
 
 	private getShortParameterName(key: string, description?: string, actionName?: string): string {
 		// Action-specific mappings for better placeholders
@@ -707,7 +680,7 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		};
 
 		// Check if parameter is explicitly required for this action
-		if (requiredParams[actionName] && requiredParams[actionName].includes(key)) {
+		if (requiredParams[actionName]?.includes(key)) {
 			return true;
 		}
 
