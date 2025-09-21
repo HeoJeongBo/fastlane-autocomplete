@@ -13,6 +13,9 @@ bunfig.toml
 biome.json
 .release-it.json
 
+# Environment variables (sensitive)
+.env
+
 # Documentation and config files not needed in extension
 CLAUDE.md
 README.md

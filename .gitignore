@@ -3,5 +3,8 @@ out/
 *.vsix
 .DS_Store
 
+# Environment variables
+.env
+
 # Bun
 bun.lockb

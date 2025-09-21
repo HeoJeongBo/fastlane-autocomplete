@@ -83,7 +83,9 @@
     "release:patch": "release-it patch",
     "release:minor": "release-it minor",
     "release:major": "release-it major",
-    "vscode:publish": "vsce publish",
+    "vscode:publish": "source .env && vsce publish",
+    "cursor:publish": "source .env && ovsx publish",
+    "publish:all": "bun run vscode:publish && bun run cursor:publish",
     "fastlane:init": "node ./scripts/init-fastlane-data.js"
   },
   "devDependencies": {
