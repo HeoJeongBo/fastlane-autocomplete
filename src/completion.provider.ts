@@ -558,102 +558,90 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		const parameters: ActionParameter[] = [];
 		let description = "";
 		let inParametersSection = false;
-		let sectionHeaderFound = false;
 
 		console.log(`=== Parsing action info for ${actionName} ===`);
 
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i];
+			const cleanLine = line.replace(/\x1b\[[0-9;]*m/g, "").trim();
 
-			// Extract description from action header
-			if (!inParametersSection && line.includes("|") && line.includes(actionName)) {
-				// Look for description in the next few lines
-				for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
-					const descLine = lines[j];
-					if (descLine.includes("|") && !descLine.includes("---") && !descLine.includes("+")) {
-						const cleanDesc = descLine
-							.replace(/\x1b\[[0-9;]*m/g, "")
-							.replace(/^\||\|$/g, "")
-							.trim();
-						if (
-							cleanDesc &&
-							!cleanDesc.includes("More information") &&
-							!cleanDesc.includes("Created by") &&
-							!cleanDesc.includes("Author")
-						) {
-							description = cleanDesc;
-							break;
-						}
-					}
+			// Extract description from action header (첫 번째 박스 안의 설명)
+			if (!inParametersSection && cleanLine.includes("|") && !cleanLine.includes("+") && !cleanLine.includes("-")) {
+				const content = cleanLine.replace(/^\||\|$/g, "").trim();
+				if (content && content !== actionName &&
+					!content.includes("More information") &&
+					!content.includes("Created by") &&
+					content.length > 10 && content.length < 200) {
+					description = content;
 				}
 			}
 
-			// Look for parameter section headers more specifically
-			if (
-				line.includes("Options") &&
-				!line.includes("Output") &&
-				!line.includes("Return") &&
-				(line.includes("Description") || line.includes("Environment") || line.includes("Default"))
-			) {
+			// "Options" 섹션 시작 찾기 (더 정확한 패턴)
+			if (cleanLine.includes("Options") && cleanLine.includes("|") && !inParametersSection) {
 				inParametersSection = true;
-				sectionHeaderFound = true;
-				console.log(`[${actionName}] Found parameter section at line ${i}: ${line}`);
+				console.log(`[${actionName}] Found Options section at line ${i}: ${cleanLine}`);
 				continue;
 			}
 
-			// Reset if we hit Output Variables or Return Value sections
-			if (
-				inParametersSection &&
-				(line.includes("Output Variables") ||
-					line.includes("Return Value") ||
-					(line.includes("Output") && line.includes("Variables")))
-			) {
-				console.log(
-					`[${actionName}] Stopping parameter parsing - found output section at: ${line}`
-				);
-				inParametersSection = false;
+			// Output Variables나 Return Value 섹션에 도달하면 중단
+			if (inParametersSection &&
+				(cleanLine.includes("Output Variables") ||
+				 cleanLine.includes("Return Value") ||
+				 cleanLine.includes("More information"))) {
+				console.log(`[${actionName}] Stopping parameter parsing - found section: ${cleanLine}`);
 				break;
 			}
 
-			// Parse parameter rows
+			// 파라미터 행 파싱
 			if (inParametersSection && line.includes("|")) {
-				// Skip header separator lines
-				if (line.includes("---") || line.includes("===") || line.includes("+++")) {
+				// 헤더나 구분자 라인 건너뛰기
+				if (cleanLine.includes("---") || cleanLine.includes("===") ||
+					cleanLine.includes("+++") || cleanLine.includes("Key") ||
+					cleanLine.match(/^\+[-+]*\+$/)) {
 					continue;
 				}
 
-				const parts = line
-					.split("|")
-					.map((part) => part.replace(/\x1b\[[0-9;]*m/g, "").trim())
-					.filter((part) => part !== "");
+				// 파이프로 분할하고 정리
+				const parts = line.split("|")
+					.map(part => part.replace(/\x1b\[[0-9;]*m/g, "").trim())
+					.filter(part => part !== "");
 
-				console.log(`[${actionName}] Parsing parameter line: ${line}`);
-				console.log(`[${actionName}] Parts:`, parts);
+				console.log(`[${actionName}] Raw line: "${line}"`);
+				console.log(`[${actionName}] Clean parts:`, parts);
 
-				if (parts.length >= 2) {
-					const key = parts[0];
+				if (parts.length >= 4) { // Key, Description, Env Var, Default 최소 4개 컬럼
+					let key = parts[0];
 					const desc = parts[1] || "";
-					const envVar = parts.length > 2 ? parts[2] : "";
-					const defaultVal = parts.length > 3 ? parts[3] : "";
+					const envVar = parts[2] || "";
+					const defaultVal = parts[3] || "";
 
-					// More flexible key validation - exclude table headers
-					if (
-						key &&
-						key !== "" &&
-						key !== "Key" &&
+					// 키가 여러 줄로 나뉘어진 경우 처리 (예: "output_director y")
+					if (key && !key.includes(" ") && i + 1 < lines.length) {
+						const nextLine = lines[i + 1].replace(/\x1b\[[0-9;]*m/g, "").trim();
+						const nextParts = nextLine.split("|").map(part => part.trim()).filter(part => part !== "");
+						if (nextParts.length > 0 && nextParts[0] && !nextParts[0].includes("Description") &&
+							nextParts[0].length < 10 && /^[a-zA-Z0-9_]*$/.test(nextParts[0])) {
+							key = key + nextParts[0];
+							console.log(`[${actionName}] Combined key: ${key}`);
+						}
+					}
+
+					// 유효한 파라미터 키인지 확인
+					if (key &&
 						/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key) &&
+						key !== "Key" &&
 						!key.includes("Description") &&
 						!key.includes("Env") &&
-						!key.includes("Default")
-					) {
-						// Action-specific required parameter detection
+						!key.includes("Default") &&
+						key.length > 1) {
+
 						const isRequired = this.isParameterRequired(actionName, key, defaultVal, envVar);
 
 						const param: ActionParameter = {
 							key,
 							description: desc,
 							envVar: envVar || undefined,
-							defaultValue: defaultVal && defaultVal !== "*" ? defaultVal : undefined,
+							defaultValue: defaultVal && defaultVal !== "*" && defaultVal !== "" ? defaultVal : undefined,
 							required: isRequired,
 						};
 
@@ -661,19 +649,6 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 						console.log(`[${actionName}] Added parameter:`, param);
 					}
 				}
-			}
-
-			// Stop parsing if we hit another section
-			if (
-				inParametersSection &&
-				sectionHeaderFound &&
-				(line.includes("More information") ||
-					line.includes("Lane Variables") ||
-					line.includes("Output Variables") ||
-					line.includes("Return Value"))
-			) {
-				console.log(`[${actionName}] Stopping parameter parsing at: ${line}`);
-				break;
 			}
 		}
 

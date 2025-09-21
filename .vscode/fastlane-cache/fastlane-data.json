@@ -1,0 +1,2541 @@
+{
+  "actions": [
+    {
+      "name": "adb_devices",
+      "description": "Get an array of Connected android device serials",
+      "parameters": []
+    },
+    {
+      "name": "add_extra_platforms",
+      "description": "Modify the default list of supported platforms",
+      "parameters": []
+    },
+    {
+      "name": "add_git_tag",
+      "description": "This will add an annotated git tag to the current branch",
+      "parameters": []
+    },
+    {
+      "name": "app_store_build_number",
+      "description": "Returns the current build_number of either live or edit",
+      "parameters": []
+    },
+    {
+      "name": "app_store_connect_api_key",
+      "description": "Load the App Store Connect API token to use in other fastlane",
+      "parameters": [
+        {
+          "key": "key_id",
+          "description": "The key ID",
+          "envVar": "APP_STORE_CONNECT_API_KEY_KEY_ID",
+          "required": false
+        },
+        {
+          "key": "issuer_id",
+          "description": "The issuer ID. It can be nil if the key is",
+          "envVar": "APP_STORE_CONNECT_API_KEY_ISSUER_ID",
+          "required": false
+        },
+        {
+          "key": "key_filepath",
+          "description": "The path to the key p8 file",
+          "envVar": "APP_STORE_CONNECT_API_KEY_KEY_FILEPATH",
+          "required": false
+        },
+        {
+          "key": "key_content",
+          "description": "The content of the key p8 file",
+          "envVar": "APP_STORE_CONNECT_API_KEY_KEY",
+          "required": false
+        },
+        {
+          "key": "is_key_content_base64",
+          "description": "Whether :key_content is Base64 encoded or not",
+          "envVar": "APP_STORE_CONNECT_API_KEY_IS_KEY_CONTENT_BASE",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "duration",
+          "description": "The token session duration",
+          "envVar": "APP_STORE_CONNECT_API_KEY_DURATION",
+          "defaultValue": "500",
+          "required": false
+        },
+        {
+          "key": "in_house",
+          "description": "Is App Store or Enterprise (in house) team?",
+          "envVar": "APP_STORE_CONNECT_API_KEY_IN_HOUSE",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "set_spaceship_token",
+          "description": "Authorizes all Spaceship::ConnectAPI requests",
+          "envVar": "APP_STORE_CONNECT_API_KEY_SET_SPACESHIP_TOKEN",
+          "defaultValue": "true",
+          "required": false
+        },
+        {
+          "key": "APP_STORE_CONNECT_API_KEY",
+          "description": "The App Store Connect API key information used for authorization requests. This hash can be",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "appaloosa",
+      "description": "Upload your app to \"Appaloosa Store\"",
+      "parameters": []
+    },
+    {
+      "name": "appetize",
+      "description": "Upload your app to \"Appetize.io\" (https://appetize.io/ 🔗) to",
+      "parameters": []
+    },
+    {
+      "name": "appetize_viewing_url_generator",
+      "description": "Generate an URL for appetize simulator",
+      "parameters": []
+    },
+    {
+      "name": "appium",
+      "description": "Run UI test by Appium with RSpec",
+      "parameters": []
+    },
+    {
+      "name": "appledoc",
+      "description": "Generate Apple-like source code documentation from the source",
+      "parameters": []
+    },
+    {
+      "name": "appstore",
+      "description": "Alias for the `upload_to_app_store` action",
+      "parameters": []
+    },
+    {
+      "name": "apteligent",
+      "description": "Upload dSYM file to \"Apteligent (Crittercism)\"",
+      "parameters": []
+    },
+    {
+      "name": "artifactory",
+      "description": "This action uploads an artifact to artifactory",
+      "parameters": []
+    },
+    {
+      "name": "backup_file",
+      "description": "This action backs up your file to \"[path].back\"",
+      "parameters": []
+    },
+    {
+      "name": "backup_xcarchive",
+      "description": "Save your [zipped] xcarchive elsewhere from default path",
+      "parameters": []
+    },
+    {
+      "name": "build_and_upload_to_appetize",
+      "description": "Generate and upload an ipa file to appetize.io",
+      "parameters": []
+    },
+    {
+      "name": "build_android_app",
+      "description": "Alias for the `gradle` action",
+      "parameters": []
+    },
+    {
+      "name": "build_app",
+      "description": "Easily build and sign your app (via _gym_)",
+      "parameters": [
+        {
+          "key": "workspace",
+          "description": "Path to the workspace file",
+          "envVar": "GYM_WORKSPACE",
+          "required": false
+        },
+        {
+          "key": "project",
+          "description": "Path to the project file",
+          "envVar": "GYM_PROJECT",
+          "required": false
+        },
+        {
+          "key": "scheme",
+          "description": "The project's scheme. Make sure it's marked",
+          "envVar": "GYM_SCHEME",
+          "required": false
+        },
+        {
+          "key": "clean",
+          "description": "Should the project be cleaned before building",
+          "envVar": "GYM_CLEAN",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "output_directory",
+          "description": "The directory in which the ipa file should be",
+          "envVar": "GYM_OUTPUT_DIRECTORY",
+          "defaultValue": ".",
+          "required": false
+        },
+        {
+          "key": "output_name",
+          "description": "The name of the resulting ipa file",
+          "envVar": "GYM_OUTPUT_NAME",
+          "required": false
+        },
+        {
+          "key": "configuration",
+          "description": "The configuration to use when building the",
+          "envVar": "GYM_CONFIGURATION",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "silent",
+          "description": "Hide all information that's not necessary",
+          "envVar": "GYM_SILENT",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "codesigning_identity",
+          "description": "The name of the code signing identity to use.",
+          "envVar": "GYM_CODE_SIGNING_IDENTITY",
+          "required": false
+        },
+        {
+          "key": "skip_package_ipa",
+          "description": "Should we skip packaging the ipa?",
+          "envVar": "GYM_SKIP_PACKAGE_IPA",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_package_pkg",
+          "description": "Should we skip packaging the pkg?",
+          "envVar": "GYM_SKIP_PACKAGE_PKG",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "include_symbols",
+          "description": "Should the ipa file include symbols?",
+          "envVar": "GYM_INCLUDE_SYMBOLS",
+          "required": false
+        },
+        {
+          "key": "include_bitcode",
+          "description": "Should the ipa file include bitcode?",
+          "envVar": "GYM_INCLUDE_BITCODE",
+          "required": false
+        },
+        {
+          "key": "export_method",
+          "description": "Method used to export the archive. Valid",
+          "envVar": "GYM_EXPORT_METHOD",
+          "required": false
+        },
+        {
+          "key": "export_options",
+          "description": "Path to an export options plist or a hash",
+          "envVar": "GYM_EXPORT_OPTIONS",
+          "required": false
+        },
+        {
+          "key": "export_xcargs",
+          "description": "Pass additional arguments to xcodebuild for",
+          "envVar": "GYM_EXPORT_XCARGS",
+          "required": false
+        },
+        {
+          "key": "skip_build_archive",
+          "description": "Export ipa from previously built xcarchive.",
+          "envVar": "GYM_SKIP_BUILD_ARCHIVE",
+          "required": false
+        },
+        {
+          "key": "skip_archive",
+          "description": "After building, don't archive, effectively",
+          "envVar": "GYM_SKIP_ARCHIVE",
+          "required": false
+        },
+        {
+          "key": "skip_codesigning",
+          "description": "Build without codesigning",
+          "envVar": "GYM_SKIP_CODESIGNING",
+          "required": false
+        },
+        {
+          "key": "catalyst_platform",
+          "description": "Platform to build when using a Catalyst",
+          "envVar": "GYM_CATALYST_PLATFORM",
+          "required": false
+        },
+        {
+          "key": "installer_cert_name",
+          "description": "Full name of 3rd Party Mac Developer",
+          "envVar": "GYM_INSTALLER_CERT_NAME",
+          "required": false
+        },
+        {
+          "key": "build_path",
+          "description": "The directory in which the archive should be",
+          "envVar": "GYM_BUILD_PATH",
+          "required": false
+        },
+        {
+          "key": "archive_path",
+          "description": "The path to the created archive",
+          "envVar": "GYM_ARCHIVE_PATH",
+          "required": false
+        },
+        {
+          "key": "derived_data_path",
+          "description": "The directory where built products and other",
+          "envVar": "GYM_DERIVED_DATA_PATH",
+          "required": false
+        },
+        {
+          "key": "result_bundle",
+          "description": "Should an Xcode result bundle be generated in",
+          "envVar": "GYM_RESULT_BUNDLE",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "result_bundle_path",
+          "description": "Path to the result bundle directory to",
+          "envVar": "GYM_RESULT_BUNDLE_PATH",
+          "required": false
+        },
+        {
+          "key": "buildlog_path",
+          "description": "The directory where to store the build log",
+          "envVar": "GYM_BUILDLOG_PATH",
+          "defaultValue": "~/Library/Logs/gym *",
+          "required": false
+        },
+        {
+          "key": "sdk",
+          "description": "The SDK that should be used for building the",
+          "envVar": "GYM_SDK",
+          "required": false
+        },
+        {
+          "key": "toolchain",
+          "description": "The toolchain that should be used for",
+          "envVar": "GYM_TOOLCHAIN",
+          "required": false
+        },
+        {
+          "key": "destination",
+          "description": "Use a custom destination for building the app",
+          "envVar": "GYM_DESTINATION",
+          "required": false
+        },
+        {
+          "key": "export_team_id",
+          "description": "Optional: Sometimes you need to specify a",
+          "envVar": "GYM_EXPORT_TEAM_ID",
+          "required": false
+        },
+        {
+          "key": "xcargs",
+          "description": "Pass additional arguments to xcodebuild for",
+          "envVar": "GYM_XCARGS",
+          "required": false
+        },
+        {
+          "key": "xcconfig",
+          "description": "Use an extra XCCONFIG file to build your app",
+          "envVar": "GYM_XCCONFIG",
+          "required": false
+        },
+        {
+          "key": "suppress_xcode_output",
+          "description": "Suppress the output of xcodebuild to stdout.",
+          "envVar": "SUPPRESS_OUTPUT",
+          "required": false
+        },
+        {
+          "key": "xcodebuild_formatter",
+          "description": "xcodebuild formatter to use (ex:",
+          "envVar": "GYM_XCODEBUILD_FORMATTER,",
+          "defaultValue": "xcpretty *",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "build_ios_app",
+      "description": "Alias for the `build_app` action but only for iOS",
+      "parameters": []
+    },
+    {
+      "name": "build_mac_app",
+      "description": "Alias for the `build_app` action but only for macOS",
+      "parameters": []
+    },
+    {
+      "name": "bundle_install",
+      "description": "This action runs `bundle install` (if available)",
+      "parameters": []
+    },
+    {
+      "name": "capture_android_screenshots",
+      "description": "Automated localized screenshots of your Android app (via",
+      "parameters": []
+    },
+    {
+      "name": "capture_ios_screenshots",
+      "description": "Generate new localized screenshots on multiple devices (via",
+      "parameters": []
+    },
+    {
+      "name": "capture_screenshots",
+      "description": "Alias for the `capture_ios_screenshots` action",
+      "parameters": []
+    },
+    {
+      "name": "carthage",
+      "description": "Runs `carthage` for your project",
+      "parameters": []
+    },
+    {
+      "name": "cert",
+      "description": "Alias for the `get_certificates` action",
+      "parameters": []
+    },
+    {
+      "name": "changelog_from_git_commits",
+      "description": "Collect git commit messages into a changelog",
+      "parameters": []
+    },
+    {
+      "name": "chatwork",
+      "description": "Send a success/error message to \"ChatWork\"",
+      "parameters": []
+    },
+    {
+      "name": "check_app_store_metadata",
+      "description": "Check your app's metadata before you submit your app to",
+      "parameters": []
+    },
+    {
+      "name": "clean_build_artifacts",
+      "description": "Deletes files created as result of running gym, cert, sigh or",
+      "parameters": []
+    },
+    {
+      "name": "clean_cocoapods_cache",
+      "description": "Remove the cache for pods",
+      "parameters": []
+    },
+    {
+      "name": "clear_derived_data",
+      "description": "Deletes the Xcode Derived Data",
+      "parameters": []
+    },
+    {
+      "name": "clipboard",
+      "description": "Copies a given string into the clipboard. Works only on macOS",
+      "parameters": []
+    },
+    {
+      "name": "cloc",
+      "description": "Generates a Code Count that can be read by Jenkins (xml",
+      "parameters": []
+    },
+    {
+      "name": "cocoapods",
+      "description": "Runs `pod install` for the project",
+      "parameters": []
+    },
+    {
+      "name": "commit_github_file",
+      "description": "This will commit a file directly on GitHub via the API",
+      "parameters": []
+    },
+    {
+      "name": "commit_version_bump",
+      "description": "Creates a 'Version Bump' commit. Run after",
+      "parameters": []
+    },
+    {
+      "name": "copy_artifacts",
+      "description": "Copy and save your build artifacts (useful when you use",
+      "parameters": []
+    },
+    {
+      "name": "create_app_on_managed_play_store",
+      "description": "Create Managed Google Play Apps",
+      "parameters": []
+    },
+    {
+      "name": "create_app_online",
+      "description": "Creates the given application on iTC and the Dev Portal (via",
+      "parameters": []
+    },
+    {
+      "name": "create_keychain",
+      "description": "Create a new Keychain",
+      "parameters": []
+    },
+    {
+      "name": "create_pull_request",
+      "description": "This will create a new pull request on GitHub",
+      "parameters": []
+    },
+    {
+      "name": "create_xcframework",
+      "description": "Package multiple build configs of a library/framework into a",
+      "parameters": []
+    },
+    {
+      "name": "danger",
+      "description": "Runs `danger` for the project",
+      "parameters": []
+    },
+    {
+      "name": "debug",
+      "description": "Print out an overview of the lane context values",
+      "parameters": []
+    },
+    {
+      "name": "default_platform",
+      "description": "Defines a default platform to not have to specify the",
+      "parameters": []
+    },
+    {
+      "name": "delete_keychain",
+      "description": "Delete keychains and remove them from the search list",
+      "parameters": []
+    },
+    {
+      "name": "deliver",
+      "description": "Alias for the `upload_to_app_store` action",
+      "parameters": []
+    },
+    {
+      "name": "deploygate",
+      "description": "Upload a new build to \"DeployGate\" (https://deploygate.com/",
+      "parameters": []
+    },
+    {
+      "name": "dotgpg_environment",
+      "description": "Reads in production secrets set in a dotgpg file and puts",
+      "parameters": []
+    },
+    {
+      "name": "download",
+      "description": "Download a file from a remote server (e.g. JSON file)",
+      "parameters": []
+    },
+    {
+      "name": "download_app_privacy_details_from_app_store",
+      "description": "Download App Privacy Details from an app in App Store Connect",
+      "parameters": []
+    },
+    {
+      "name": "download_dsyms",
+      "description": "Download dSYM files from App Store Connect for Bitcode apps",
+      "parameters": []
+    },
+    {
+      "name": "download_from_play_store",
+      "description": "Download metadata and binaries from Google Play (via",
+      "parameters": []
+    },
+    {
+      "name": "download_universal_apk_from_google_play",
+      "description": "Download the Universal APK of a given version code from the",
+      "parameters": []
+    },
+    {
+      "name": "dsym_zip",
+      "description": "Creates a zipped dSYM in the project root from the .xcarchive",
+      "parameters": []
+    },
+    {
+      "name": "echo",
+      "description": "Alias for the `puts` action",
+      "parameters": []
+    },
+    {
+      "name": "ensure_bundle_exec",
+      "description": "Raises an exception if not using `bundle exec` to run",
+      "parameters": []
+    },
+    {
+      "name": "ensure_env_vars",
+      "description": "Raises an exception if the specified env vars are not set",
+      "parameters": []
+    },
+    {
+      "name": "ensure_git_branch",
+      "description": "Raises an exception if not on a specific git branch",
+      "parameters": []
+    },
+    {
+      "name": "ensure_git_status_clean",
+      "description": "Raises an exception if there are uncommitted git changes",
+      "parameters": []
+    },
+    {
+      "name": "ensure_no_debug_code",
+      "description": "Ensures the given text is nowhere in the code base",
+      "parameters": []
+    },
+    {
+      "name": "ensure_xcode_version",
+      "description": "Ensure the right version of Xcode is used",
+      "parameters": []
+    },
+    {
+      "name": "environment_variable",
+      "description": "Sets/gets env vars for Fastlane.swift. Don't use in ruby, use",
+      "parameters": []
+    },
+    {
+      "name": "erb",
+      "description": "Allows to Generate output files based on ERB templates",
+      "parameters": []
+    },
+    {
+      "name": "fastlane_version",
+      "description": "Alias for the `min_fastlane_version` action",
+      "parameters": []
+    },
+    {
+      "name": "flock",
+      "description": "Send a message to a \"Flock\" (https://flock.com/ 🔗) group",
+      "parameters": []
+    },
+    {
+      "name": "frame_screenshots",
+      "description": "Adds device frames around all screenshots (via _frameit_)",
+      "parameters": []
+    },
+    {
+      "name": "frameit",
+      "description": "Alias for the `frame_screenshots` action",
+      "parameters": []
+    },
+    {
+      "name": "gcovr",
+      "description": "Runs test coverage reports for your Xcode project",
+      "parameters": []
+    },
+    {
+      "name": "get_build_number",
+      "description": "Get the build number of your project",
+      "parameters": []
+    },
+    {
+      "name": "get_build_number_repository",
+      "description": "Get the build number from the current repository",
+      "parameters": []
+    },
+    {
+      "name": "get_certificates",
+      "description": "Create new iOS code signing certificates (via _cert_)",
+      "parameters": []
+    },
+    {
+      "name": "get_github_release",
+      "description": "This will verify if a given release version is available on",
+      "parameters": []
+    },
+    {
+      "name": "get_info_plist_value",
+      "description": "Returns value from Info.plist of your project as native Ruby",
+      "parameters": []
+    },
+    {
+      "name": "get_ipa_info_plist_value",
+      "description": "Returns a value from Info.plist inside a .ipa file",
+      "parameters": []
+    },
+    {
+      "name": "get_managed_play_store_publishing_rights",
+      "description": "Obtain publishing rights for custom apps on Managed Google",
+      "parameters": []
+    },
+    {
+      "name": "get_provisioning_profile",
+      "description": "Generates a provisioning profile, saving it in the current",
+      "parameters": []
+    },
+    {
+      "name": "get_push_certificate",
+      "description": "Ensure a valid push profile is active, creating a new one if",
+      "parameters": []
+    },
+    {
+      "name": "get_version_number",
+      "description": "Get the version number of your project",
+      "parameters": [
+        {
+          "key": "xcodeproj",
+          "description": "Path to the Xcode project to read version",
+          "envVar": "FL_VERSION_NUMBER_PROJECT",
+          "required": false
+        },
+        {
+          "key": "target",
+          "description": "Target name, optional. Will be needed if you",
+          "envVar": "FL_VERSION_NUMBER_TARGET",
+          "required": false
+        },
+        {
+          "key": "configuration",
+          "description": "Configuration name, optional. Will be needed",
+          "envVar": "FL_VERSION_NUMBER_CONFIGURATION",
+          "required": false
+        },
+        {
+          "key": "VERSION_NUMBER",
+          "description": "The version number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "git_add",
+      "description": "Directly add the given file or all files",
+      "parameters": [
+        {
+          "key": "path",
+          "description": "The file(s) and path(s) you want to add",
+          "required": true
+        },
+        {
+          "key": "shell_escape",
+          "description": "Shell escapes paths (set to false if using",
+          "envVar": "true",
+          "required": false
+        },
+        {
+          "key": "force",
+          "description": "Allow adding otherwise ignored files",
+          "envVar": "false",
+          "required": false
+        },
+        {
+          "key": "pathspec",
+          "description": "**DEPRECATED!** Use `--path` instead - The",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "git_branch",
+      "description": "Returns the name of the current git branch, possibly as",
+      "parameters": []
+    },
+    {
+      "name": "git_commit",
+      "description": "Directly commit the given file with the given message",
+      "parameters": [
+        {
+          "key": "path",
+          "description": "The file(s) or directory(ies) you want to",
+          "required": true
+        },
+        {
+          "key": "message",
+          "description": "The commit message that should be used",
+          "required": true
+        },
+        {
+          "key": "skip_git_hooks",
+          "description": "Set to true to pass `--no-verify` to git",
+          "envVar": "false",
+          "required": false
+        },
+        {
+          "key": "allow_nothing_to_commit",
+          "description": "Set to true to allow commit without any git",
+          "envVar": "false",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "git_pull",
+      "description": "Executes a simple git pull command",
+      "parameters": []
+    },
+    {
+      "name": "git_remote_branch",
+      "description": "Returns the name of the current git remote default branch",
+      "parameters": []
+    },
+    {
+      "name": "git_submodule_update",
+      "description": "Executes a git submodule update command",
+      "parameters": []
+    },
+    {
+      "name": "git_tag_exists",
+      "description": "Checks if the git tag with the given name exists in the",
+      "parameters": []
+    },
+    {
+      "name": "github_api",
+      "description": "Call a GitHub API endpoint and get the resulting JSON",
+      "parameters": []
+    },
+    {
+      "name": "google_play_track_release_names",
+      "description": "Retrieves release names for a Google Play track",
+      "parameters": []
+    },
+    {
+      "name": "google_play_track_version_codes",
+      "description": "Retrieves version codes for a Google Play track",
+      "parameters": []
+    },
+    {
+      "name": "gradle",
+      "description": "All gradle related actions, including building and testing",
+      "parameters": [
+        {
+          "key": "task",
+          "description": "The gradle task you want to execute, e.g.",
+          "envVar": "FL_GRADLE_TASK",
+          "required": false
+        },
+        {
+          "key": "flavor",
+          "description": "The flavor that you want the task for, e.g.",
+          "envVar": "FL_GRADLE_FLAVOR",
+          "required": false
+        },
+        {
+          "key": "build_type",
+          "description": "The build type that you want the task for,",
+          "envVar": "FL_GRADLE_BUILD_TYPE",
+          "required": false
+        },
+        {
+          "key": "tasks",
+          "description": "The multiple gradle tasks that you want to",
+          "envVar": "FL_GRADLE_TASKS",
+          "required": false
+        },
+        {
+          "key": "flags",
+          "description": "All parameter flags you want to pass to the",
+          "envVar": "FL_GRADLE_FLAGS",
+          "required": false
+        },
+        {
+          "key": "project_dir",
+          "description": "The root directory of the gradle project",
+          "envVar": "FL_GRADLE_PROJECT_DIR",
+          "defaultValue": ".",
+          "required": false
+        },
+        {
+          "key": "gradle_path",
+          "description": "The path to your `gradlew`. If you specify a",
+          "envVar": "FL_GRADLE_PATH",
+          "required": false
+        },
+        {
+          "key": "properties",
+          "description": "Gradle properties to be exposed to the gradle",
+          "envVar": "FL_GRADLE_PROPERTIES",
+          "required": false
+        },
+        {
+          "key": "system_properties",
+          "description": "Gradle system properties to be exposed to the",
+          "envVar": "FL_GRADLE_SYSTEM_PROPERTIES",
+          "required": false
+        },
+        {
+          "key": "serial",
+          "description": "Android serial, which device should be used",
+          "envVar": "FL_ANDROID_SERIAL",
+          "defaultValue": "''",
+          "required": false
+        },
+        {
+          "key": "print_command",
+          "description": "Control whether the generated Gradle command",
+          "envVar": "FL_GRADLE_PRINT_COMMAND",
+          "defaultValue": "true",
+          "required": false
+        },
+        {
+          "key": "print_command_output",
+          "description": "Control whether the output produced by given",
+          "envVar": "FL_GRADLE_PRINT_COMMAND_OUTPUT",
+          "defaultValue": "true",
+          "required": false
+        },
+        {
+          "key": "GRADLE_APK_OUTPUT_PATH",
+          "description": "The path to the newly generated apk file. Undefined in a multi-variant assemble scenario",
+          "required": true
+        },
+        {
+          "key": "GRADLE_ALL_APK_OUTPUT_PATHS",
+          "description": "When running a multi-variant `assemble`, the array of signed apk's that were generated",
+          "required": true
+        },
+        {
+          "key": "GRADLE_FLAVOR",
+          "description": "The flavor, e.g. `MyFlavor`",
+          "required": true
+        },
+        {
+          "key": "GRADLE_BUILD_TYPE",
+          "description": "The build type, e.g. `Release`",
+          "required": true
+        },
+        {
+          "key": "GRADLE_AAB_OUTPUT_PATH",
+          "description": "The path to the most recent Android app bundle",
+          "required": true
+        },
+        {
+          "key": "GRADLE_ALL_AAB_OUTPUT_PATHS",
+          "description": "The paths to the most recent Android app bundles",
+          "required": true
+        },
+        {
+          "key": "GRADLE_OUTPUT_JSON_OUTPUT_PATH",
+          "description": "The path to the most recent output.json file",
+          "required": true
+        },
+        {
+          "key": "GRADLE_ALL_OUTPUT_JSON_OUTPUT_PATHS",
+          "description": "The path to the newly generated output.json files",
+          "required": true
+        },
+        {
+          "key": "GRADLE_MAPPING_TXT_OUTPUT_PATH",
+          "description": "The path to the most recent mapping.txt file",
+          "required": true
+        },
+        {
+          "key": "GRADLE_ALL_MAPPING_TXT_OUTPUT_PATHS",
+          "description": "The path to the newly generated mapping.txt files",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "gym",
+      "description": "Alias for the `build_app` action",
+      "parameters": []
+    },
+    {
+      "name": "hg_add_tag",
+      "description": "This will add a hg tag to the current branch",
+      "parameters": []
+    },
+    {
+      "name": "hg_commit_version_bump",
+      "description": "This will commit a version bump to the hg repo",
+      "parameters": []
+    },
+    {
+      "name": "hg_ensure_clean_status",
+      "description": "Raises an exception if there are uncommitted hg changes",
+      "parameters": []
+    },
+    {
+      "name": "hg_push",
+      "description": "This will push changes to the remote hg repository",
+      "parameters": []
+    },
+    {
+      "name": "ifttt",
+      "description": "Connect to the \"IFTTT Maker Channel\" (https://ifttt.com/maker",
+      "parameters": []
+    },
+    {
+      "name": "import",
+      "description": "Import another Fastfile to use its lanes",
+      "parameters": []
+    },
+    {
+      "name": "import_certificate",
+      "description": "Import certificate from inputfile into a keychain",
+      "parameters": []
+    },
+    {
+      "name": "import_from_git",
+      "description": "Import another Fastfile from a remote git repository to use",
+      "parameters": []
+    },
+    {
+      "name": "increment_build_number",
+      "description": "Increment the build number of your project",
+      "parameters": [
+        {
+          "key": "build_number",
+          "description": "Change to a specific version. When you",
+          "envVar": "FL_BUILD_NUMBER_BUILD_NUMBER",
+          "required": false
+        },
+        {
+          "key": "skip_info_plist",
+          "description": "Don't update Info.plist files when updating",
+          "envVar": "FL_BUILD_NUMBER_SKIP_INFO_PLIST",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "xcodeproj",
+          "description": "optional, you must specify the path to your",
+          "envVar": "FL_BUILD_NUMBER_PROJECT",
+          "required": false
+        },
+        {
+          "key": "BUILD_NUMBER",
+          "description": "The new build number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "increment_version_number",
+      "description": "Increment the version number of your project",
+      "parameters": []
+    },
+    {
+      "name": "install_on_device",
+      "description": "Installs an .ipa file on a connected iOS-device via usb or",
+      "parameters": []
+    },
+    {
+      "name": "install_provisioning_profile",
+      "description": "Install provisioning profile from path",
+      "parameters": []
+    },
+    {
+      "name": "install_xcode_plugin",
+      "description": "Install an Xcode plugin for the current user",
+      "parameters": []
+    },
+    {
+      "name": "installr",
+      "description": "Upload a new build to \"Installr\" (http://installrapp.com/ 🔗)",
+      "parameters": []
+    },
+    {
+      "name": "is_ci",
+      "description": "Is the current run being executed on a CI system, like",
+      "parameters": []
+    },
+    {
+      "name": "jazzy",
+      "description": "Generate docs using Jazzy",
+      "parameters": []
+    },
+    {
+      "name": "jira",
+      "description": "Leave a comment on a Jira ticket",
+      "parameters": []
+    },
+    {
+      "name": "lane_context",
+      "description": "Access lane context values",
+      "parameters": []
+    },
+    {
+      "name": "last_git_commit",
+      "description": "Return last git commit hash, abbreviated commit hash, commit",
+      "parameters": []
+    },
+    {
+      "name": "last_git_tag",
+      "description": "Get the most recent git tag",
+      "parameters": []
+    },
+    {
+      "name": "latest_testflight_build_number",
+      "description": "Fetches most recent build number from TestFlight",
+      "parameters": []
+    },
+    {
+      "name": "lcov",
+      "description": "Generates coverage data using lcov",
+      "parameters": []
+    },
+    {
+      "name": "mailgun",
+      "description": "Send a success/error message to an email group",
+      "parameters": []
+    },
+    {
+      "name": "make_changelog_from_jenkins",
+      "description": "Generate a changelog using the Changes section from the",
+      "parameters": []
+    },
+    {
+      "name": "match",
+      "description": "Alias for the `sync_code_signing` action",
+      "parameters": [
+        {
+          "key": "type",
+          "description": "Define the profile type, can be appstore,",
+          "envVar": "MATCH_TYPE",
+          "defaultValue": "development",
+          "required": false
+        },
+        {
+          "key": "additional_cert_types",
+          "description": "Create additional cert types needed for macOS",
+          "envVar": "MATCH_ADDITIONAL_CERT_TYPES",
+          "required": false
+        },
+        {
+          "key": "readonly",
+          "description": "Only fetch existing certificates and",
+          "envVar": "MATCH_READONLY",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "generate_apple_certs",
+          "description": "Create a certificate type for Xcode 11 and",
+          "envVar": "MATCH_GENERATE_APPLE_CERTS",
+          "defaultValue": "true *",
+          "required": false
+        },
+        {
+          "key": "skip_provisioning_profiles",
+          "description": "Skip syncing provisioning profiles",
+          "envVar": "MATCH_SKIP_PROVISIONING_PROFILES",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "app_identifier",
+          "description": "The bundle identifier(s) of your app",
+          "envVar": "MATCH_APP_IDENTIFIER",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "api_key_path",
+          "description": "Path to your App Store Connect API Key JSON",
+          "envVar": "SIGH_API_KEY_PATH,",
+          "required": false
+        },
+        {
+          "key": "file",
+          "description": "APP_STORE_CONNECT_API_KEY_PATH",
+          "required": true
+        },
+        {
+          "key": "api_key",
+          "description": "Your App Store Connect API Key information",
+          "envVar": "SIGH_API_KEY, APP_STORE_CONNECT_API_KEY",
+          "required": false
+        },
+        {
+          "key": "username",
+          "description": "Your Apple ID Username",
+          "envVar": "MATCH_USERNAME",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "team_id",
+          "description": "The ID of your Developer Portal team if",
+          "envVar": "FASTLANE_TEAM_ID",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "team_name",
+          "description": "The name of your Developer Portal team if",
+          "envVar": "FASTLANE_TEAM_NAME",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "storage_mode",
+          "description": "Define where you want to store your",
+          "envVar": "MATCH_STORAGE_MODE",
+          "defaultValue": "git",
+          "required": false
+        },
+        {
+          "key": "git_url",
+          "description": "URL to the git repo containing all the",
+          "envVar": "MATCH_GIT_URL",
+          "required": false
+        },
+        {
+          "key": "git_branch",
+          "description": "Specific git branch to use",
+          "envVar": "MATCH_GIT_BRANCH",
+          "defaultValue": "master",
+          "required": false
+        },
+        {
+          "key": "git_full_name",
+          "description": "git user full name to commit",
+          "envVar": "MATCH_GIT_FULL_NAME",
+          "required": false
+        },
+        {
+          "key": "git_user_email",
+          "description": "git user email to commit",
+          "envVar": "MATCH_GIT_USER_EMAIL",
+          "required": false
+        },
+        {
+          "key": "shallow_clone",
+          "description": "Make a shallow clone of the repository",
+          "envVar": "MATCH_SHALLOW_CLONE",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "clone_branch_directly",
+          "description": "Clone just the branch specified, instead of",
+          "envVar": "MATCH_CLONE_BRANCH_DIRECTLY",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "git_basic_authorization",
+          "description": "Use a basic authorization header to access",
+          "envVar": "MATCH_GIT_BASIC_AUTHORIZATION",
+          "required": false
+        },
+        {
+          "key": "git_bearer_authorization",
+          "description": "Use a bearer authorization header to access",
+          "envVar": "MATCH_GIT_BEARER_AUTHORIZATION",
+          "required": false
+        },
+        {
+          "key": "git_private_key",
+          "description": "Use a private key to access the git repo",
+          "envVar": "MATCH_GIT_PRIVATE_KEY",
+          "required": false
+        },
+        {
+          "key": "google_cloud_bucket_name",
+          "description": "Name of the Google Cloud Storage bucket to",
+          "envVar": "MATCH_GOOGLE_CLOUD_BUCKET_NAME",
+          "required": false
+        },
+        {
+          "key": "google_cloud_keys_file",
+          "description": "Path to the gc_keys.json file",
+          "envVar": "MATCH_GOOGLE_CLOUD_KEYS_FILE",
+          "required": false
+        },
+        {
+          "key": "google_cloud_project_id",
+          "description": "ID of the Google Cloud project to use for",
+          "envVar": "MATCH_GOOGLE_CLOUD_PROJECT_ID",
+          "required": false
+        },
+        {
+          "key": "skip_google_cloud_account_confirmation",
+          "description": "Skips confirming to use the system google",
+          "envVar": "MATCH_SKIP_GOOGLE_CLOUD_ACCOUNT_CONFIRMATION",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "s3_region",
+          "description": "Name of the S3 region",
+          "envVar": "MATCH_S3_REGION",
+          "required": false
+        },
+        {
+          "key": "s3_access_key",
+          "description": "S3 access key",
+          "envVar": "MATCH_S3_ACCESS_KEY",
+          "required": false
+        },
+        {
+          "key": "s3_secret_access_key",
+          "description": "S3 secret access key",
+          "envVar": "MATCH_S3_SECRET_ACCESS_KEY",
+          "required": false
+        },
+        {
+          "key": "s3_bucket",
+          "description": "Name of the S3 bucket",
+          "envVar": "MATCH_S3_BUCKET",
+          "required": false
+        },
+        {
+          "key": "s3_object_prefix",
+          "description": "Prefix to be used on all objects uploaded to",
+          "envVar": "MATCH_S3_OBJECT_PREFIX",
+          "required": false
+        },
+        {
+          "key": "s3_skip_encryption",
+          "description": "Skip encryption of all objects uploaded to",
+          "envVar": "MATCH_S3_SKIP_ENCRYPTION",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "gitlab_project",
+          "description": "GitLab Project Path (i.e.",
+          "envVar": "MATCH_GITLAB_PROJECT",
+          "required": false
+        },
+        {
+          "key": "gitlab_host",
+          "description": "GitLab Host (i.e. 'https://gitlab.com')",
+          "envVar": "MATCH_GITLAB_HOST",
+          "defaultValue": "https://gitlab.com",
+          "required": false
+        },
+        {
+          "key": "job_token",
+          "description": "GitLab CI_JOB_TOKEN",
+          "envVar": "CI_JOB_TOKEN",
+          "required": false
+        },
+        {
+          "key": "private_token",
+          "description": "GitLab Access Token",
+          "envVar": "PRIVATE_TOKEN",
+          "required": false
+        },
+        {
+          "key": "keychain_name",
+          "description": "Keychain the items should be imported to",
+          "envVar": "MATCH_KEYCHAIN_NAME",
+          "defaultValue": "login.keychain",
+          "required": false
+        },
+        {
+          "key": "keychain_password",
+          "description": "This might be required the first time you",
+          "envVar": "MATCH_KEYCHAIN_PASSWORD",
+          "required": false
+        },
+        {
+          "key": "force",
+          "description": "Renew the provisioning profiles every time",
+          "envVar": "MATCH_FORCE",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "force_for_new_devices",
+          "description": "Renew the provisioning profiles if the device",
+          "envVar": "MATCH_FORCE_FOR_NEW_DEVICES",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "include_mac_in_profiles",
+          "description": "Include Apple Silicon Mac devices in",
+          "envVar": "MATCH_INCLUDE_MAC_IN_PROFILES",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "include_all_certificates",
+          "description": "Include all matching certificates in the",
+          "envVar": "MATCH_INCLUDE_ALL_CERTIFICATES",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "certificate_id",
+          "description": "Select certificate by id. Useful if multiple",
+          "envVar": "MATCH_CERTIFICATE_ID",
+          "required": false
+        },
+        {
+          "key": "force_for_new_certificates",
+          "description": "Renew the provisioning profiles if the",
+          "envVar": "MATCH_FORCE_FOR_NEW_CERTIFICATES",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_confirmation",
+          "description": "Disables confirmation prompts during nuke,",
+          "envVar": "MATCH_SKIP_CONFIRMATION",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "safe_remove_certs",
+          "description": "Remove certs from repository during nuke",
+          "envVar": "MATCH_SAFE_REMOVE_CERTS",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_docs",
+          "description": "Skip generation of a README.md for the",
+          "envVar": "MATCH_SKIP_DOCS",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "platform",
+          "description": "Set the provisioning profile's platform to",
+          "envVar": "MATCH_PLATFORM",
+          "defaultValue": "ios *",
+          "required": false
+        },
+        {
+          "key": "derive_catalyst_app_identifier",
+          "description": "Enable this if you have the Mac Catalyst",
+          "envVar": "MATCH_DERIVE_CATALYST_APP_IDENTIFIER",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "template_name",
+          "description": "**DEPRECATED!** Removed since May 2025 on App",
+          "envVar": "MATCH_PROVISIONING_PROFILE_TEMPLATE_NAME",
+          "required": false
+        },
+        {
+          "key": "profile_name",
+          "description": "A custom name for the provisioning profile.",
+          "envVar": "MATCH_PROVISIONING_PROFILE_NAME",
+          "required": false
+        },
+        {
+          "key": "fail_on_name_taken",
+          "description": "Should the command fail if it was about to",
+          "envVar": "MATCH_FAIL_ON_NAME_TAKEN",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_certificate_matching",
+          "description": "Set to true if there is no access to Apple",
+          "envVar": "MATCH_SKIP_CERTIFICATE_MATCHING",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "output_path",
+          "description": "Path in which to export certificates, key and",
+          "envVar": "MATCH_OUTPUT_PATH",
+          "required": false
+        },
+        {
+          "key": "skip_set_partition_list",
+          "description": "Skips setting the partition list (which can",
+          "envVar": "MATCH_SKIP_SET_PARTITION_LIST",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "force_legacy_encryption",
+          "description": "Force encryption to use legacy cbc algorithm",
+          "envVar": "MATCH_FORCE_LEGACY_ENCRYPTION",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "verbose",
+          "description": "Print out extra information and all commands",
+          "envVar": "MATCH_VERBOSE",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "MATCH_PROVISIONING_PROFILE_MAPPING",
+          "description": "The match provisioning profile mapping",
+          "required": true
+        },
+        {
+          "key": "SIGH_PROFILE_TYPE",
+          "description": "The profile type, can be app-store, ad-hoc, development, enterprise, can be used in `build_app`",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "match_nuke",
+      "description": "Easily nuke your certificate and provisioning profiles (via",
+      "parameters": []
+    },
+    {
+      "name": "min_fastlane_version",
+      "description": "Verifies the minimum fastlane version required",
+      "parameters": []
+    },
+    {
+      "name": "modify_services",
+      "description": "Modifies the services of the app created on Developer Portal",
+      "parameters": []
+    },
+    {
+      "name": "nexus_upload",
+      "description": "Upload a file to \"Sonatype Nexus platform\"",
+      "parameters": []
+    },
+    {
+      "name": "notarize",
+      "description": "Notarizes a macOS app",
+      "parameters": []
+    },
+    {
+      "name": "notification",
+      "description": "Display a macOS notification with custom message and title",
+      "parameters": []
+    },
+    {
+      "name": "number_of_commits",
+      "description": "Return the number of commits in current git branch",
+      "parameters": []
+    },
+    {
+      "name": "oclint",
+      "description": "Lints implementation files with OCLint",
+      "parameters": []
+    },
+    {
+      "name": "onesignal",
+      "description": "Create or update a new \"OneSignal\" (https://onesignal.com/ 🔗)",
+      "parameters": []
+    },
+    {
+      "name": "opt_out_usage",
+      "description": "This will stop uploading the information which actions were",
+      "parameters": []
+    },
+    {
+      "name": "pem",
+      "description": "Alias for the `get_push_certificate` action",
+      "parameters": []
+    },
+    {
+      "name": "pilot",
+      "description": "Alias for the `upload_to_testflight` action",
+      "parameters": []
+    },
+    {
+      "name": "pod_lib_lint",
+      "description": "Pod lib lint",
+      "parameters": []
+    },
+    {
+      "name": "pod_push",
+      "description": "Push a Podspec to Trunk or a private repository",
+      "parameters": []
+    },
+    {
+      "name": "podio_item",
+      "description": "Creates or updates an item within your Podio app",
+      "parameters": []
+    },
+    {
+      "name": "precheck",
+      "description": "Alias for the `check_app_store_metadata` action",
+      "parameters": []
+    },
+    {
+      "name": "println",
+      "description": "Alias for the `puts` action",
+      "parameters": []
+    },
+    {
+      "name": "produce",
+      "description": "Alias for the `create_app_online` action",
+      "parameters": []
+    },
+    {
+      "name": "prompt",
+      "description": "Ask the user for a value or for confirmation",
+      "parameters": []
+    },
+    {
+      "name": "push_git_tags",
+      "description": "Push local tags to the remote - this will only push tags",
+      "parameters": []
+    },
+    {
+      "name": "push_to_git_remote",
+      "description": "Push local changes to the remote branch",
+      "parameters": []
+    },
+    {
+      "name": "puts",
+      "description": "Prints out the given text",
+      "parameters": []
+    },
+    {
+      "name": "read_podspec",
+      "description": "Loads a CocoaPods spec as JSON",
+      "parameters": []
+    },
+    {
+      "name": "recreate_schemes",
+      "description": "Recreate not shared Xcode project schemes",
+      "parameters": []
+    },
+    {
+      "name": "register_device",
+      "description": "Registers a new device to the Apple Dev Portal",
+      "parameters": []
+    },
+    {
+      "name": "register_devices",
+      "description": "Registers new devices to the Apple Dev Portal",
+      "parameters": []
+    },
+    {
+      "name": "reset_git_repo",
+      "description": "Resets git repo to a clean state by discarding uncommitted",
+      "parameters": []
+    },
+    {
+      "name": "reset_simulator_contents",
+      "description": "Shutdown and reset running simulators",
+      "parameters": []
+    },
+    {
+      "name": "resign",
+      "description": "Codesign an existing ipa file",
+      "parameters": []
+    },
+    {
+      "name": "restore_file",
+      "description": "This action restore your file that was backed up with the",
+      "parameters": []
+    },
+    {
+      "name": "rocket",
+      "description": "Outputs ascii-art for a rocket 🚀",
+      "parameters": []
+    },
+    {
+      "name": "rsync",
+      "description": "Rsync files from :source to :destination",
+      "parameters": []
+    },
+    {
+      "name": "ruby_version",
+      "description": "Verifies the minimum ruby version required",
+      "parameters": []
+    },
+    {
+      "name": "run_tests",
+      "description": "Easily run tests of your iOS app (via _scan_)",
+      "parameters": []
+    },
+    {
+      "name": "say",
+      "description": "This action speaks the given text out loud",
+      "parameters": []
+    },
+    {
+      "name": "scan",
+      "description": "Alias for the `run_tests` action",
+      "parameters": []
+    },
+    {
+      "name": "scp",
+      "description": "Transfer files via SCP",
+      "parameters": []
+    },
+    {
+      "name": "screengrab",
+      "description": "Alias for the `capture_android_screenshots` action",
+      "parameters": []
+    },
+    {
+      "name": "set_build_number_repository",
+      "description": "Set the build number from the current repository",
+      "parameters": []
+    },
+    {
+      "name": "set_changelog",
+      "description": "Set the changelog for all languages on App Store Connect",
+      "parameters": []
+    },
+    {
+      "name": "set_github_release",
+      "description": "This will create a new release on GitHub and upload assets",
+      "parameters": []
+    },
+    {
+      "name": "set_info_plist_value",
+      "description": "Sets value to Info.plist of your project as native Ruby data",
+      "parameters": []
+    },
+    {
+      "name": "set_pod_key",
+      "description": "Sets a value for a key with cocoapods-keys",
+      "parameters": []
+    },
+    {
+      "name": "setup_ci",
+      "description": "Setup the keychain and match to work with CI",
+      "parameters": []
+    },
+    {
+      "name": "setup_circle_ci",
+      "description": "Setup the keychain and match to work with CircleCI",
+      "parameters": []
+    },
+    {
+      "name": "setup_jenkins",
+      "description": "Setup xcodebuild, gym and scan for easier Jenkins integration",
+      "parameters": []
+    },
+    {
+      "name": "setup_travis",
+      "description": "Setup the keychain and match to work with Travis CI",
+      "parameters": []
+    },
+    {
+      "name": "sh",
+      "description": "Runs a shell command",
+      "parameters": []
+    },
+    {
+      "name": "sigh",
+      "description": "Alias for the `get_provisioning_profile` action",
+      "parameters": []
+    },
+    {
+      "name": "skip_docs",
+      "description": "Skip the creation of the fastlane/README.md file when running",
+      "parameters": []
+    },
+    {
+      "name": "slack",
+      "description": "Send a success/error message to your \"Slack\"",
+      "parameters": []
+    },
+    {
+      "name": "slather",
+      "description": "Use slather to generate a code coverage report",
+      "parameters": []
+    },
+    {
+      "name": "snapshot",
+      "description": "Alias for the `capture_ios_screenshots` action",
+      "parameters": []
+    },
+    {
+      "name": "sonar",
+      "description": "Invokes sonar-scanner to programmatically run SonarQube",
+      "parameters": []
+    },
+    {
+      "name": "sourcedocs",
+      "description": "Generate docs using SourceDocs",
+      "parameters": []
+    },
+    {
+      "name": "spaceship_logs",
+      "description": "Find, print, and copy Spaceship logs",
+      "parameters": []
+    },
+    {
+      "name": "spaceship_stats",
+      "description": "Print out Spaceship stats from this session (number of",
+      "parameters": []
+    },
+    {
+      "name": "splunkmint",
+      "description": "Upload dSYM file to \"Splunk MINT\" (https://mint.splunk.com/",
+      "parameters": []
+    },
+    {
+      "name": "spm",
+      "description": "Runs Swift Package Manager on your project",
+      "parameters": []
+    },
+    {
+      "name": "ssh",
+      "description": "Allows remote command execution using ssh",
+      "parameters": []
+    },
+    {
+      "name": "supply",
+      "description": "Alias for the `upload_to_play_store` action",
+      "parameters": []
+    },
+    {
+      "name": "swiftlint",
+      "description": "Run swift code validation using SwiftLint",
+      "parameters": []
+    },
+    {
+      "name": "sync_code_signing",
+      "description": "Easily sync your certificates and profiles across your team",
+      "parameters": []
+    },
+    {
+      "name": "team_id",
+      "description": "Specify the Team ID you want to use for the Apple Developer",
+      "parameters": []
+    },
+    {
+      "name": "team_name",
+      "description": "Set a team to use by its name",
+      "parameters": []
+    },
+    {
+      "name": "testfairy",
+      "description": "Upload a new build to SauceLabs' TestFairy",
+      "parameters": []
+    },
+    {
+      "name": "testflight",
+      "description": "Alias for the `upload_to_testflight` action",
+      "parameters": []
+    },
+    {
+      "name": "trainer",
+      "description": "Convert the Xcode plist log to a JUnit report",
+      "parameters": []
+    },
+    {
+      "name": "tryouts",
+      "description": "Upload a new build to \"Tryouts\" (https://tryouts.io/ 🔗)",
+      "parameters": []
+    },
+    {
+      "name": "twitter",
+      "description": "Post a tweet on \"Twitter.com\" (https://twitter.com 🔗)",
+      "parameters": []
+    },
+    {
+      "name": "typetalk",
+      "description": "Post a message to \"Typetalk\" (https://www.typetalk.com/ 🔗)",
+      "parameters": []
+    },
+    {
+      "name": "unlock_keychain",
+      "description": "Unlock a keychain",
+      "parameters": []
+    },
+    {
+      "name": "update_app_group_identifiers",
+      "description": "This action changes the app group identifiers in the",
+      "parameters": []
+    },
+    {
+      "name": "update_app_identifier",
+      "description": "Update the project's bundle identifier",
+      "parameters": []
+    },
+    {
+      "name": "update_code_signing_settings",
+      "description": "Configures Xcode's Codesigning options",
+      "parameters": []
+    },
+    {
+      "name": "update_fastlane",
+      "description": "Makes sure fastlane-tools are up-to-date when running",
+      "parameters": []
+    },
+    {
+      "name": "update_icloud_container_identifiers",
+      "description": "This action changes the iCloud container identifiers in the",
+      "parameters": []
+    },
+    {
+      "name": "update_info_plist",
+      "description": "Update a Info.plist file with bundle identifier and display",
+      "parameters": []
+    },
+    {
+      "name": "update_keychain_access_groups",
+      "description": "This action changes the keychain access groups in the",
+      "parameters": []
+    },
+    {
+      "name": "update_plist",
+      "description": "Update a plist file",
+      "parameters": []
+    },
+    {
+      "name": "update_project_provisioning",
+      "description": "Update projects code signing settings from your provisioning",
+      "parameters": []
+    },
+    {
+      "name": "update_project_team",
+      "description": "Update Xcode Development Team ID",
+      "parameters": []
+    },
+    {
+      "name": "update_urban_airship_configuration",
+      "description": "Set \"Urban Airship\" (https://www.urbanairship.com/ 🔗) plist",
+      "parameters": []
+    },
+    {
+      "name": "update_url_schemes",
+      "description": "Updates the URL schemes in the given Info.plist",
+      "parameters": []
+    },
+    {
+      "name": "upload_app_privacy_details_to_app_store",
+      "description": "Upload App Privacy Details for an app in App Store Connect",
+      "parameters": []
+    },
+    {
+      "name": "upload_symbols_to_crashlytics",
+      "description": "Upload dSYM symbolication files to Crashlytics",
+      "parameters": []
+    },
+    {
+      "name": "upload_to_app_store",
+      "description": "Upload metadata and binary to App Store Connect (via",
+      "parameters": []
+    },
+    {
+      "name": "upload_to_play_store",
+      "description": "Upload metadata, screenshots and binaries to Google Play (via",
+      "parameters": [
+        {
+          "key": "package_name",
+          "description": "The package name of the application to use",
+          "envVar": "SUPPLY_PACKAGE_NAME",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "version_name",
+          "description": "Version name (used when uploading new",
+          "envVar": "SUPPLY_VERSION_NAME",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "version_code",
+          "description": "Version code (used when updating rollout or",
+          "envVar": "SUPPLY_VERSION_CODE",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "release_status",
+          "description": "Release status (used when uploading new",
+          "envVar": "SUPPLY_RELEASE_STATUS",
+          "defaultValue": "completed *",
+          "required": false
+        },
+        {
+          "key": "track",
+          "description": "The track of the application to use. The",
+          "envVar": "SUPPLY_TRACK",
+          "defaultValue": "production",
+          "required": false
+        },
+        {
+          "key": "rollout",
+          "description": "The percentage of the user fraction when",
+          "required": true
+        },
+        {
+          "key": "metadata_path",
+          "description": "Path to the directory containing the metadata",
+          "envVar": "SUPPLY_METADATA_PATH",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "key",
+          "description": "**DEPRECATED!** Use `--json_key` instead -",
+          "envVar": "SUPPLY_KEY",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "issuer",
+          "description": "**DEPRECATED!** Use `--json_key` instead -",
+          "envVar": "SUPPLY_ISSUER",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "json_key",
+          "description": "The path to a file containing service account",
+          "envVar": "SUPPLY_JSON_KEY",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "json_key_data",
+          "description": "The raw service account JSON data used to",
+          "envVar": "SUPPLY_JSON_KEY_DATA",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "apk",
+          "description": "Path to the APK file to upload",
+          "envVar": "SUPPLY_APK",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "apk_paths",
+          "description": "An array of paths to APK files to upload",
+          "envVar": "SUPPLY_APK_PATHS",
+          "required": false
+        },
+        {
+          "key": "aab",
+          "description": "Path to the AAB file to upload",
+          "envVar": "SUPPLY_AAB",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "aab_paths",
+          "description": "An array of paths to AAB files to upload",
+          "envVar": "SUPPLY_AAB_PATHS",
+          "required": false
+        },
+        {
+          "key": "skip_upload_apk",
+          "description": "Whether to skip uploading APK",
+          "envVar": "SUPPLY_SKIP_UPLOAD_APK",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_upload_aab",
+          "description": "Whether to skip uploading AAB",
+          "envVar": "SUPPLY_SKIP_UPLOAD_AAB",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_upload_metadata",
+          "description": "Whether to skip uploading metadata,",
+          "envVar": "SUPPLY_SKIP_UPLOAD_METADATA",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_upload_changelogs",
+          "description": "Whether to skip uploading changelogs",
+          "envVar": "SUPPLY_SKIP_UPLOAD_CHANGELOGS",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_upload_images",
+          "description": "Whether to skip uploading images, screenshots",
+          "envVar": "SUPPLY_SKIP_UPLOAD_IMAGES",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_upload_screenshots",
+          "description": "Whether to skip uploading SCREENSHOTS",
+          "envVar": "SUPPLY_SKIP_UPLOAD_SCREENSHOTS",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "sync_image_upload",
+          "description": "Whether to use sha256 comparison to skip",
+          "envVar": "SUPPLY_SYNC_IMAGE_UPLOAD",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "track_promote_to",
+          "description": "The track to promote to. The default",
+          "envVar": "SUPPLY_TRACK_PROMOTE_TO",
+          "required": false
+        },
+        {
+          "key": "track_promote_release_status",
+          "description": "Promoted track release status (used when",
+          "envVar": "SUPPLY_TRACK_PROMOTE_RELEASE_STATUS",
+          "defaultValue": "completed",
+          "required": false
+        },
+        {
+          "key": "validate_only",
+          "description": "Only validate changes with Google Play rather",
+          "envVar": "SUPPLY_VALIDATE_ONLY",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "mapping",
+          "description": "Path to the mapping file to upload",
+          "envVar": "SUPPLY_MAPPING",
+          "required": false
+        },
+        {
+          "key": "mapping_paths",
+          "description": "An array of paths to mapping files to upload",
+          "envVar": "SUPPLY_MAPPING_PATHS",
+          "required": false
+        },
+        {
+          "key": "root_url",
+          "description": "Root URL for the Google Play API. The",
+          "envVar": "SUPPLY_ROOT_URL",
+          "required": false
+        },
+        {
+          "key": "check_superseded_tracks",
+          "description": "**DEPRECATED!** Google Play does this",
+          "envVar": "SUPPLY_CHECK_SUPERSEDED_TRACKS",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "timeout",
+          "description": "Timeout for read, open, and send (in seconds)",
+          "envVar": "SUPPLY_TIMEOUT",
+          "defaultValue": "300",
+          "required": false
+        },
+        {
+          "key": "deactivate_on_promote",
+          "description": "**DEPRECATED!** Google Play does this",
+          "envVar": "SUPPLY_DEACTIVATE_ON_PROMOTE",
+          "defaultValue": "true",
+          "required": false
+        },
+        {
+          "key": "version_codes_to_retain",
+          "description": "An array of version codes to retain when",
+          "required": true
+        },
+        {
+          "key": "changes_not_sent_for_review",
+          "description": "Indicates that the changes in this edit will",
+          "envVar": "SUPPLY_CHANGES_NOT_SENT_FOR_REVIEW",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "rescue_changes_not_sent_for_review",
+          "description": "Catches changes_not_sent_for_review errors",
+          "envVar": "SUPPLY_RESCUE_CHANGES_NOT_SENT_FOR_REVIEW",
+          "defaultValue": "true",
+          "required": false
+        },
+        {
+          "key": "in_app_update_priority",
+          "description": "In-app update priority for all the newly",
+          "envVar": "SUPPLY_IN_APP_UPDATE_PRIORITY",
+          "required": false
+        },
+        {
+          "key": "obb_main_references_version",
+          "description": "References version of 'main' expansion file",
+          "envVar": "SUPPLY_OBB_MAIN_REFERENCES_VERSION",
+          "required": false
+        },
+        {
+          "key": "obb_main_file_size",
+          "description": "Size of 'main' expansion file in bytes",
+          "envVar": "SUPPLY_OBB_MAIN_FILE SIZE",
+          "required": false
+        },
+        {
+          "key": "obb_patch_references_version",
+          "description": "References version of 'patch' expansion file",
+          "envVar": "SUPPLY_OBB_PATCH_REFERENCES_VERSION",
+          "required": false
+        },
+        {
+          "key": "obb_patch_file_size",
+          "description": "Size of 'patch' expansion file in bytes",
+          "envVar": "SUPPLY_OBB_PATCH_FILE SIZE",
+          "required": false
+        },
+        {
+          "key": "ack_bundle_installation_warning",
+          "description": "Must be set to true if the bundle",
+          "envVar": "ACK_BUNDLE_INSTALLATION_WARNING",
+          "defaultValue": "false",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "upload_to_play_store_internal_app_sharing",
+      "description": "Upload binaries to Google Play Internal App Sharing (via",
+      "parameters": []
+    },
+    {
+      "name": "upload_to_testflight",
+      "description": "Upload new binary to App Store Connect for TestFlight beta",
+      "parameters": [
+        {
+          "key": "api_key_path",
+          "description": "Path to your App Store Connect API Key JSON",
+          "envVar": "PILOT_API_KEY_PATH,",
+          "required": false
+        },
+        {
+          "key": "file",
+          "description": "APP_STORE_CONNECT_API_KEY_PATH",
+          "required": true
+        },
+        {
+          "key": "api_key",
+          "description": "Your App Store Connect API Key information",
+          "envVar": "PILOT_API_KEY, APP_STORE_CONNECT_API_KEY",
+          "required": false
+        },
+        {
+          "key": "username",
+          "description": "Your Apple ID Username",
+          "envVar": "PILOT_USERNAME",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "app_identifier",
+          "description": "The bundle identifier of the app to upload or",
+          "envVar": "PILOT_APP_IDENTIFIER",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "app_platform",
+          "description": "The platform to use (optional)",
+          "envVar": "PILOT_PLATFORM",
+          "required": false
+        },
+        {
+          "key": "apple_id",
+          "description": "Apple ID property in the App Information",
+          "envVar": "PILOT_APPLE_ID",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "ipa",
+          "description": "Path to the ipa file to upload",
+          "envVar": "PILOT_IPA",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "pkg",
+          "description": "Path to your pkg file",
+          "envVar": "PILOT_PKG",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "demo_account_required",
+          "description": "Do you need a demo account when Apple does",
+          "envVar": "DEMO_ACCOUNT_REQUIRED",
+          "required": false
+        },
+        {
+          "key": "beta_app_review_info",
+          "description": "Beta app review information for contact info",
+          "envVar": "PILOT_BETA_APP_REVIEW_INFO",
+          "required": false
+        },
+        {
+          "key": "localized_app_info",
+          "description": "Localized beta app test info for description,",
+          "envVar": "PILOT_LOCALIZED_APP_INFO",
+          "required": false
+        },
+        {
+          "key": "beta_app_description",
+          "description": "Provide the 'Beta App Description' when",
+          "envVar": "PILOT_BETA_APP_DESCRIPTION",
+          "required": false
+        },
+        {
+          "key": "beta_app_feedback_email",
+          "description": "Provide the beta app email when uploading a",
+          "envVar": "PILOT_BETA_APP_FEEDBACK",
+          "required": false
+        },
+        {
+          "key": "localized_build_info",
+          "description": "Localized beta app test info for what's new",
+          "envVar": "PILOT_LOCALIZED_BUILD_INFO",
+          "required": false
+        },
+        {
+          "key": "changelog",
+          "description": "Provide the 'What to Test' text when",
+          "envVar": "PILOT_CHANGELOG",
+          "required": false
+        },
+        {
+          "key": "skip_submission",
+          "description": "Skip the distributing action of pilot and",
+          "envVar": "PILOT_SKIP_SUBMISSION",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "skip_waiting_for_build_processing",
+          "description": "If set to true, the `distribute_external`",
+          "envVar": "PILOT_SKIP_WAITING_FOR_BUILD_PROCESSING",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "update_build_info_on_upload",
+          "description": "**DEPRECATED!** Update build info immediately",
+          "envVar": "PILOT_UPDATE_BUILD_INFO_ON_UPLOAD",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "distribute_only",
+          "description": "Distribute a previously uploaded build",
+          "envVar": "PILOT_DISTRIBUTE_ONLY",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "uses_non_exempt_encryption",
+          "description": "Provide the 'Uses Non-Exempt Encryption' for",
+          "envVar": "PILOT_USES_NON_EXEMPT_ENCRYPTION",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "distribute_external",
+          "description": "Should the build be distributed to external",
+          "envVar": "PILOT_DISTRIBUTE_EXTERNAL",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "notify_external_testers",
+          "description": "Should notify external testers? (Not setting",
+          "envVar": "PILOT_NOTIFY_EXTERNAL_TESTERS",
+          "required": false
+        },
+        {
+          "key": "app_version",
+          "description": "The version number of the application build",
+          "envVar": "PILOT_APP_VERSION",
+          "required": false
+        },
+        {
+          "key": "build_number",
+          "description": "The build number of the application build to",
+          "envVar": "PILOT_BUILD_NUMBER",
+          "required": false
+        },
+        {
+          "key": "expire_previous_builds",
+          "description": "Should expire previous builds?",
+          "envVar": "PILOT_EXPIRE_PREVIOUS_BUILDS",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "first_name",
+          "description": "The tester's first name",
+          "envVar": "PILOT_TESTER_FIRST_NAME",
+          "required": false
+        },
+        {
+          "key": "last_name",
+          "description": "The tester's last name",
+          "envVar": "PILOT_TESTER_LAST_NAME",
+          "required": false
+        },
+        {
+          "key": "email",
+          "description": "The tester's email",
+          "envVar": "PILOT_TESTER_EMAIL",
+          "required": false
+        },
+        {
+          "key": "testers_file_path",
+          "description": "Path to a CSV file of testers",
+          "envVar": "PILOT_TESTERS_FILE",
+          "defaultValue": "./testers.csv",
+          "required": false
+        },
+        {
+          "key": "groups",
+          "description": "Associate tester to one group or more by",
+          "envVar": "PILOT_GROUPS",
+          "required": false
+        },
+        {
+          "key": "team_id",
+          "description": "The ID of your App Store Connect team if",
+          "envVar": "PILOT_TEAM_ID",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "team_name",
+          "description": "The name of your App Store Connect team if",
+          "envVar": "PILOT_TEAM_NAME",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "dev_portal_team_id",
+          "description": "The short ID of your team in the developer",
+          "envVar": "PILOT_DEV_PORTAL_TEAM_ID",
+          "defaultValue": "*",
+          "required": false
+        },
+        {
+          "key": "itc_provider",
+          "description": "The provider short name to be used with the",
+          "envVar": "PILOT_ITC_PROVIDER",
+          "required": false
+        },
+        {
+          "key": "wait_processing_interval",
+          "description": "Interval in seconds to wait for App Store",
+          "envVar": "PILOT_WAIT_PROCESSING_INTERVAL",
+          "defaultValue": "30",
+          "required": false
+        },
+        {
+          "key": "wait_processing_timeout_duration",
+          "description": "Timeout duration in seconds to wait for App",
+          "envVar": "PILOT_WAIT_PROCESSING_TIMEOUT_DURATION",
+          "required": false
+        },
+        {
+          "key": "wait_for_uploaded_build",
+          "description": "**DEPRECATED!** No longer needed with the",
+          "envVar": "PILOT_WAIT_FOR_UPLOADED_BUILD",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "reject_build_waiting_for_review",
+          "description": "Expire previous if it's 'waiting for review'",
+          "envVar": "PILOT_REJECT_PREVIOUS_BUILD",
+          "defaultValue": "false",
+          "required": false
+        },
+        {
+          "key": "submit_beta_review",
+          "description": "Send the build for a beta review",
+          "envVar": "PILOT_DISTRIBUTE_EXTERNAL",
+          "defaultValue": "true",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "validate_play_store_json_key",
+      "description": "Validate that the Google Play Store `json_key` works",
+      "parameters": []
+    },
+    {
+      "name": "verify_build",
+      "description": "Able to verify various settings in ipa file",
+      "parameters": []
+    },
+    {
+      "name": "verify_pod_keys",
+      "description": "Verifies all keys referenced from the Podfile are non-empty",
+      "parameters": []
+    },
+    {
+      "name": "verify_xcode",
+      "description": "Verifies that the Xcode installation is properly signed by",
+      "parameters": []
+    },
+    {
+      "name": "version_bump_podspec",
+      "description": "Increment or set the version in a podspec file",
+      "parameters": []
+    },
+    {
+      "name": "version_get_podspec",
+      "description": "Receive the version number from a podspec file",
+      "parameters": []
+    },
+    {
+      "name": "xcarchive",
+      "description": "Archives the project using `xcodebuild`",
+      "parameters": []
+    },
+    {
+      "name": "xcbuild",
+      "description": "Builds the project using `xcodebuild`",
+      "parameters": []
+    },
+    {
+      "name": "xcclean",
+      "description": "Cleans the project using `xcodebuild`",
+      "parameters": []
+    },
+    {
+      "name": "xcexport",
+      "description": "Exports the project using `xcodebuild`",
+      "parameters": []
+    },
+    {
+      "name": "xcode_select",
+      "description": "Change the xcode-path to use. Useful for beta versions of",
+      "parameters": []
+    },
+    {
+      "name": "xcode_server_get_assets",
+      "description": "Downloads Xcode Bot assets like the `.xcarchive` and logs",
+      "parameters": []
+    },
+    {
+      "name": "xcodebuild",
+      "description": "Use the `xcodebuild` command to build and sign your app",
+      "parameters": []
+    },
+    {
+      "name": "xcodes",
+      "description": "Make sure a certain version of Xcode is installed, installing",
+      "parameters": []
+    },
+    {
+      "name": "xcov",
+      "description": "Nice code coverage reports without hassle",
+      "parameters": []
+    },
+    {
+      "name": "xctest",
+      "description": "Runs tests on the given simulator",
+      "parameters": []
+    },
+    {
+      "name": "xctool",
+      "description": "Run tests using xctool",
+      "parameters": []
+    },
+    {
+      "name": "zip",
+      "description": "Compress a file or folder to a zip",
+      "parameters": []
+    }
+  ],
+  "lanes": [],
+  "timestamp": "2025-09-21T05:05:48.501Z",
+  "version": "1.0.0"
+}
