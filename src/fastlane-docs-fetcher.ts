@@ -130,8 +130,6 @@ export class FastlaneDocsFetcher {
 		return null;
 	}
 
-
-
 	/**
 	 * Clear cache
 	 */

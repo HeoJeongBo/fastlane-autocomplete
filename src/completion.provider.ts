@@ -137,7 +137,6 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 		return lineText.substring(start, end);
 	}
 
-
 	private getShortParameterName(key: string, description?: string, actionName?: string): string {
 		// Action-specific mappings for better placeholders
 		const actionSpecificMappings: Record<string, Record<string, string>> = {
