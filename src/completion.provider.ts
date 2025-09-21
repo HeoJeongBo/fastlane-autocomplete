@@ -566,12 +566,21 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			const cleanLine = line.replace(/\x1b\[[0-9;]*m/g, "").trim();
 
 			// Extract description from action header (첫 번째 박스 안의 설명)
-			if (!inParametersSection && cleanLine.includes("|") && !cleanLine.includes("+") && !cleanLine.includes("-")) {
+			if (
+				!inParametersSection &&
+				cleanLine.includes("|") &&
+				!cleanLine.includes("+") &&
+				!cleanLine.includes("-")
+			) {
 				const content = cleanLine.replace(/^\||\|$/g, "").trim();
-				if (content && content !== actionName &&
+				if (
+					content &&
+					content !== actionName &&
 					!content.includes("More information") &&
 					!content.includes("Created by") &&
-					content.length > 10 && content.length < 200) {
+					content.length > 10 &&
+					content.length < 200
+				) {
 					description = content;
 				}
 			}
@@ -584,10 +593,12 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			}
 
 			// Output Variables나 Return Value 섹션에 도달하면 중단
-			if (inParametersSection &&
+			if (
+				inParametersSection &&
 				(cleanLine.includes("Output Variables") ||
-				 cleanLine.includes("Return Value") ||
-				 cleanLine.includes("More information"))) {
+					cleanLine.includes("Return Value") ||
+					cleanLine.includes("More information"))
+			) {
 				console.log(`[${actionName}] Stopping parameter parsing - found section: ${cleanLine}`);
 				break;
 			}
@@ -595,21 +606,27 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 			// 파라미터 행 파싱
 			if (inParametersSection && line.includes("|")) {
 				// 헤더나 구분자 라인 건너뛰기
-				if (cleanLine.includes("---") || cleanLine.includes("===") ||
-					cleanLine.includes("+++") || cleanLine.includes("Key") ||
-					cleanLine.match(/^\+[-+]*\+$/)) {
+				if (
+					cleanLine.includes("---") ||
+					cleanLine.includes("===") ||
+					cleanLine.includes("+++") ||
+					cleanLine.includes("Key") ||
+					cleanLine.match(/^\+[-+]*\+$/)
+				) {
 					continue;
 				}
 
 				// 파이프로 분할하고 정리
-				const parts = line.split("|")
-					.map(part => part.replace(/\x1b\[[0-9;]*m/g, "").trim())
-					.filter(part => part !== "");
+				const parts = line
+					.split("|")
+					.map((part) => part.replace(/\x1b\[[0-9;]*m/g, "").trim())
+					.filter((part) => part !== "");
 
 				console.log(`[${actionName}] Raw line: "${line}"`);
 				console.log(`[${actionName}] Clean parts:`, parts);
 
-				if (parts.length >= 4) { // Key, Description, Env Var, Default 최소 4개 컬럼
+				if (parts.length >= 4) {
+					// Key, Description, Env Var, Default 최소 4개 컬럼
 					let key = parts[0];
 					const desc = parts[1] || "";
 					const envVar = parts[2] || "";
@@ -618,30 +635,40 @@ export class FastlaneCompletionProvider implements vscode.CompletionItemProvider
 					// 키가 여러 줄로 나뉘어진 경우 처리 (예: "output_director y")
 					if (key && !key.includes(" ") && i + 1 < lines.length) {
 						const nextLine = lines[i + 1].replace(/\x1b\[[0-9;]*m/g, "").trim();
-						const nextParts = nextLine.split("|").map(part => part.trim()).filter(part => part !== "");
-						if (nextParts.length > 0 && nextParts[0] && !nextParts[0].includes("Description") &&
-							nextParts[0].length < 10 && /^[a-zA-Z0-9_]*$/.test(nextParts[0])) {
+						const nextParts = nextLine
+							.split("|")
+							.map((part) => part.trim())
+							.filter((part) => part !== "");
+						if (
+							nextParts.length > 0 &&
+							nextParts[0] &&
+							!nextParts[0].includes("Description") &&
+							nextParts[0].length < 10 &&
+							/^[a-zA-Z0-9_]*$/.test(nextParts[0])
+						) {
 							key = key + nextParts[0];
 							console.log(`[${actionName}] Combined key: ${key}`);
 						}
 					}
 
 					// 유효한 파라미터 키인지 확인
-					if (key &&
+					if (
+						key &&
 						/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(key) &&
 						key !== "Key" &&
 						!key.includes("Description") &&
 						!key.includes("Env") &&
 						!key.includes("Default") &&
-						key.length > 1) {
-
+						key.length > 1
+					) {
 						const isRequired = this.isParameterRequired(actionName, key, defaultVal, envVar);
 
 						const param: ActionParameter = {
 							key,
 							description: desc,
 							envVar: envVar || undefined,
-							defaultValue: defaultVal && defaultVal !== "*" && defaultVal !== "" ? defaultVal : undefined,
+							defaultValue:
+								defaultVal && defaultVal !== "*" && defaultVal !== "" ? defaultVal : undefined,
 							required: isRequired,
 						};
 
