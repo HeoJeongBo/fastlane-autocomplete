@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+# [0.2.0](https://github.com/heojeongbo/fastlane-autocomplete/compare/v0.1.5...v0.2.0) (2025-09-21)
+
+
+### Features
+
+* add build script ([dd21cf6](https://github.com/heojeongbo/fastlane-autocomplete/commit/dd21cf6a38d32b8a6ef5a0214e2d21f99567791e))
+
 ## [0.1.5](https://github.com/heojeongbo/fastlane-autocomplete/compare/v0.1.4...v0.1.5) (2025-09-21)
 
 
